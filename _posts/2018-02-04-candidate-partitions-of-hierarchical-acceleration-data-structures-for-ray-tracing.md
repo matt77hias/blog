@@ -119,8 +119,8 @@ BIHs are also known as *Spatial Kd trees* (SKds) and *Bounded Kd trees* (B-Kds).
 ##### AABBs of the child voxels
 The AABB of both child voxels is similar to those of BSPs except that the AABB's plane corresponding to the <span style="color:purple;">splitting plane</span> is made tight to the geometric primitives.
 
-* (+) $$\mathcal{O}\left(N \log N\right)$$ full sweeping-plane SAH build algorithm is possible for constructing complete BVHs.
-* (+) $$\mathcal{O}\left(N \log N\right)$$ binned SAH build algorithm for constructing complete BVHs (in parallel) is possible.
+* (+) $$\mathcal{O}\left(N \log N\right)$$ full sweeping-plane SAH build algorithm is possible for constructing complete BIHs.
+* (+) $$\mathcal{O}\left(N \log N\right)$$ binned SAH build algorithm for constructing complete BIHs (in parallel) is possible.
 
 ##### References
 
