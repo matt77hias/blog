@@ -88,8 +88,8 @@ KAPLAN M. R.: The Use of Spatial Coherence in Ray Tracing. *ACM SIGGRAPH Course 
 ##### AABBs of the child voxels
 The AABB of both child voxels is made tight to the geometric primitives. *Note that the AABBs of the child voxels may not be larger than the AABB of the <span style="color:blue;">parent</span> voxel, which can occur while constructing SBVHs. In this case, only the overlap with the AABB of the <span style="color:blue;">parent</span> voxel will be used.*
 
-* (+) $$\mathcal{O}\left(N \log N\right)$$ full sweeping-plane SAH build algorithm is possible for constructing complete BIHs.
-* (+) $$\mathcal{O}\left(N \log N\right)$$ binned SAH build algorithm for constructing complete BIHs (in parallel) is possible.
+* (+) $$\mathcal{O}\left(N \log N\right)$$ full sweeping-plane SAH build algorithm is possible for constructing complete BVHs.
+* (+) $$\mathcal{O}\left(N \log N\right)$$ binned SAH build algorithm for constructing complete BVHs (in parallel) is possible.
 
 BVHs are traversed by testing the ray for intersection with the AABBs associated with the intermediate/child voxels.
 
