@@ -200,7 +200,7 @@ Since, GK-BVHs will be traversed similarly to BVHs, nothing is stopping us from 
 
 Besides being a hybrid of BVH and GK-BVH candidate partitions, the SBVH is more flexible than a GK-BVH. The best candidate partition can be refined if geometric primitives are contained in both child voxels. Each such primitive can be added to the <span style="color:green;">left</span>, <span style="color:red;">right</span> or both child voxels. After iterating these geometric primitives, we obtain the final best candidate partition for a single split decision.
 
-If we do not use optimizations such as LBVHs which uses spatial Morton coding to organize the BVH. The SBVH is conceptually the most effective acceleration data structure presented here so far, offering the best of both worlds (i.e. hybrid of spatial and object partitioning schemes). SBVHs were the preferred acceleration data structure of [NVidia OptiX Ray Tracing Engine](https://developer.nvidia.com/optix).
+If we do not use optimizations such as LBVHs which uses spatial Morton coding to organize the BVH. The SBVH is conceptually the most effective acceleration data structure presented here so far, offering the best of both worlds (i.e. hybrid of spatial and object partitioning schemes). SBVHs were the preferred acceleration data structure of the [NVidia OptiX Ray Tracing Engine](https://developer.nvidia.com/optix).
 
 ##### References
 
