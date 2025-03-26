@@ -191,7 +191,7 @@ POPOV S., GEORGIEV I., DIMOV R., SLUSALLEK P.: Object Partitioning Considered Ha
 
 <div align="center"><img src="https://i.sstatic.net/0IkdU.jpg"></div>
 
-SBVHs are built with a combination of a BVH and GK-BVH candidate partitions.
+SBVHs are built with a combination of BVH and GK-BVH candidate partitions.
 
 * (-) $$\mathcal{O}\left(N \log N\right)$$ full sweeping-plane SAH build algorithm is **not** possible for constructing complete SBVHs due to the inclusion of GK-BVH candidate partitions (*see above*).
 * (+) $$\mathcal{O}\left(N \log N\right)$$ binned SAH build algorithm for constructing complete SBVHs (in parallel) is possible.
