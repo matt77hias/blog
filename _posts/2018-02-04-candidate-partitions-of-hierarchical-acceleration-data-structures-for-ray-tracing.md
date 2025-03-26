@@ -42,7 +42,7 @@ In case of a binary tree with axis-aligned voxels, the BSP is called a *kd-tree*
 * Geometric primitives whose AABB is straddling the <span style="color:purple;">splitting plane</span> belong to both child voxels.
 
 ##### AABBs of the child voxels
-The AABB of both child voxels can be trivially calculated given the <span style="color:blue;">parent</span> voxel and the <span style="color:purple;">splitting plane</span>. The spatial union of the AABB of both child voxels is equal to the <span style="color:blue;">parent</span> voxel (none of the six surrounding planes is tight).
+The AABB of both child voxels can be trivially computed given the <span style="color:blue;">parent</span> voxel and the <span style="color:purple;">splitting plane</span>. The spatial union of the AABB of both child voxels is equal to the <span style="color:blue;">parent</span> voxel (none of the six surrounding planes is tight).
 
 *Split clipping* is a possible optimization (i.e. clipping the geometric primitives against the <span style="color:purple;">splitting plane</span> and/or the AABB of the <span style="color:blue;">parent</span> voxel). It is possible that the AABB of a geometric primitive straddles the <span style="color:purple;">splitting plane</span>, but the actual geometric primitive only lies on one side of the <span style="color:purple;">splitting plane</span>. It is even possible that the AABB of a geometric primitive overlaps with a <span style="color:blue;">parent</span> voxel, but not the geometric primitive associated with this AABB.
 
@@ -53,7 +53,7 @@ The AABB of both child voxels can be trivially calculated given the <span style=
 * Geometric primitives lying outside the <span style="color:blue;">parent</span> voxel belong to none of the child voxels.
 
 ##### AABBs of the child voxels
-The AABB of both child voxels can be trivially calculated given the <span style="color:blue;">parent</span> voxel and the <span style="color:purple;">splitting plane</span>. The spatial union of the AABB of both child voxels is equal to the <span style="color:blue;">parent</span> voxel (none of the six surrounding planes is tight).
+The AABB of both child voxels can be trivially computed given the <span style="color:blue;">parent</span> voxel and the <span style="color:purple;">splitting plane</span>. The spatial union of the AABB of both child voxels is equal to the <span style="color:blue;">parent</span> voxel (none of the six surrounding planes is tight).
 
 * (+) $$\mathcal{O}\left(N \log N\right)$$ full sweeping-plane SAH build algorithm is possible for constructing complete BSPs.
 * (+) $$\mathcal{O}\left(N \log N\right)$$ binned SAH build algorithm for constructing complete BSPs (in parallel) is possible.
