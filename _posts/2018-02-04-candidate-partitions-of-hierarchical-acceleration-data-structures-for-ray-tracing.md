@@ -34,7 +34,7 @@ As we will see, the structure of these candidate partitions differ between diffe
 
 In case of a binary tree with axis-aligned voxels, the BSP is called a *kd-tree* or *rectilinear BSP*.
 
-<div align="center"><img src="http://i.stack.imgur.com/Q40LG.jpg"/></div>
+<div align="center"><img src="http://i.stack.imgur.com/Q40LG.jpg"></div>
 
 ##### Geometric primitives of the child voxels
 * Geometric primitives whose AABB is to the left of the <span style="color:purple;">splitting plane</span> belong to the <span style="color:green;">left</span> child voxel. 
