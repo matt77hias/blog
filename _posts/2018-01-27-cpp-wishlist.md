@@ -30,6 +30,7 @@ Lets assume that we want to convert 32-bit numeric values (unsigned/signed integ
 In order to specify this mapping in C++, we can use a class template that will be specialized for each element of the mapping:
 
 ```c++
+// int32_t, int64_t, uint32_t, uint64_t
 #include <cstdint>
 
 //  int32_t maps to  int64_t
