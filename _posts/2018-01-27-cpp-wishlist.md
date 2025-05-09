@@ -65,7 +65,7 @@ template< typename T >
 using return_t = typename ReturnType< T >::type;
 
 template< typename T >
-return_t< T > convert(T value)
+auto convert(T value) -> return_t< T >
 {
     return return_t< T >(value);
 }
