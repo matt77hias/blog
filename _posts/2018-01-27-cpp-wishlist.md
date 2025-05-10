@@ -78,6 +78,7 @@ This code seems pretty verbose for what it actually tries to achieve (e.g., why 
 Ideally, we would like to write something like this:
 
 ```c++
+// int32_t, int64_t, uint32_t, uint64_t
 #include <cstdint>
 
 //  int32_t maps to  int64_t
