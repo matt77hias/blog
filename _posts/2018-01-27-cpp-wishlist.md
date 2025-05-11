@@ -98,7 +98,7 @@ template<>
 using return_t< float > = double;
 
 template< typename T >
-return_t< T > convert(T value)
+auto convert(T value) -> return_t< T >
 {
     return return_t< T >(value);
 }
