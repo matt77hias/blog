@@ -118,6 +118,7 @@ If we use [SFINAE](http://en.cppreference.com/w/cpp/language/sfinae) on the retu
 * **C++11**
 
 ```c++
+// enable_if, is_same
 #include <type_traits>
 // vector
 #include <vector>
