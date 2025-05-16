@@ -153,7 +153,7 @@ auto Create(ConstructorArgsT&&... args)
     return *g_bars.end();
 }
 
-int main()
+auto main() -> int
 {
     auto& foo = Create< Foo >();
     auto& bar = Create< Bar >();
