@@ -23,7 +23,7 @@ enum class B : unsigned int
     Bar
 };
 
-int main()
+auto main() -> int
 {
     auto unscoped = Foo | Bar;
     static_assert(std::same_as< decltype(unscoped), unsigned int >);
