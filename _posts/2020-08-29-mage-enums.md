@@ -54,7 +54,7 @@ enum class B : unsigned int
     Bar
 };
 
-int main()
+auto main() -> int
 {
     A unscoped = static_cast< A >(Foo | Bar);
 
