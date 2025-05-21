@@ -180,16 +180,16 @@ std::vector< Foo > g_foos;
 std::vector< Bar > g_bars;
 
 template< typename ResourceT, typename... ConstructorArgsT >
-std::enable_if_t< std::is_same< Foo, ResourceT >::value, ResourceT& > 
-    Create(ConstructorArgsT&&... args)
+auto Create(ConstructorArgsT&&... args)
+    -> std::enable_if_t< std::is_same< Foo, ResourceT >::value, ResourceT& >
 {
     g_foos.emplace_back(std::forward< ConstructorArgsT >(args)...);
     return *g_foos.end();
 }
 
 template< typename ResourceT, typename... ConstructorArgsT >
-std::enable_if_t< std::is_same< Bar, ResourceT >::value, ResourceT& > 
-    Create(ConstructorArgsT&&... args)
+auto Create(ConstructorArgsT&&... args)
+    -> std::enable_if_t< std::is_same< Bar, ResourceT >::value, ResourceT& > 
 {
     g_bars.emplace_back(std::forward< ConstructorArgsT >(args)...);
     return *g_bars.end();
