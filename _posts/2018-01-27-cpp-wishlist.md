@@ -208,6 +208,7 @@ auto main() -> int
 * **C++17** (using the new [`std::vector::emplace_back`](http://en.cppreference.com/w/cpp/container/vector/emplace_back) and [`std::is_same_v`](http://en.cppreference.com/w/cpp/types/is_same))
 
 ```c++
+// enable_if_t, is_same_v
 #include <type_traits>
 // vector
 #include <vector>
