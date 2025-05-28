@@ -284,7 +284,7 @@ ResourceT& Create(ConstructorArgsT&&... args)
     } 
 }
 
-int main()
+auto main() -> int
 {
     auto& foo = Create< Foo >();
     auto& bar = Create< Bar >();
