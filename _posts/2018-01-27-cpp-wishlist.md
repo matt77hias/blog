@@ -257,6 +257,7 @@ Alternatively, we can use C++17's [`if constexpr`](http://en.cppreference.com/w/
 
 ```c++
 #include <type_traits>
+// vector
 #include <vector>
 
 struct Foo
