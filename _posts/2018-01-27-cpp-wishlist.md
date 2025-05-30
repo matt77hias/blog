@@ -256,7 +256,10 @@ If we stick to SFINAE, we will probably have to wait until C++20 which will intr
 Alternatively, we can use C++17's [`if constexpr`](http://en.cppreference.com/w/cpp/language/if):
 
 ```c++
+// is_same_v
 #include <type_traits>
+// forward
+#include <utility>
 // vector
 #include <vector>
 
