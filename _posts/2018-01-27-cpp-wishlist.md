@@ -280,7 +280,7 @@ std::vector< Foo > g_foos;
 std::vector< Bar > g_bars;
 
 template< typename ResourceT, typename... ConstructorArgsT >
-ResourceT& Create(ConstructorArgsT&&... args)
+auto Create(ConstructorArgsT&&... args) -> ResourceT&
 {
     if constexpr (std::is_same_v< Foo, ResourceT >)
 	{
