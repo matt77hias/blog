@@ -305,6 +305,7 @@ Ideally, we would like to write something like this:
 
 ```c++
 #include <type_traits>
+// vector
 #include <vector>
 
 struct Foo
