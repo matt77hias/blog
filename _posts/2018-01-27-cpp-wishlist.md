@@ -304,7 +304,8 @@ This looks much more compact, but unfortunately requires us to know all resource
 Ideally, we would like to write something like this:
 
 ```c++
-#include <type_traits>
+// forward
+#include <utility>
 // vector
 #include <vector>
 
