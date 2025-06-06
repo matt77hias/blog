@@ -322,7 +322,7 @@ std::vector< Foo > g_foos;
 std::vector< Bar > g_bars;
 
 template< typename ResourceT, typename... ConstructorArgsT >
-ResourceT& Create(ConstructorArgsT&&... args);
+auto Create(ConstructorArgsT&&... args) -> ResourceT&;
 
 template< typename... ConstructorArgsT >
 inline Foo& Create(ConstructorArgsT&&... args)
