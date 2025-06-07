@@ -336,7 +336,7 @@ inline Bar& Create(ConstructorArgsT&&... args)
     return g_bars.emplace_back(std::forward< ConstructorArgsT >(args)...);
 }
 
-int main()
+auto main() -> int
 {
     auto& foo = Create< Foo >();
     auto& bar = Create< Bar >();
