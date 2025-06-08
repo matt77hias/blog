@@ -325,13 +325,13 @@ template< typename ResourceT, typename... ConstructorArgsT >
 auto Create(ConstructorArgsT&&... args) -> ResourceT&;
 
 template< typename... ConstructorArgsT >
-inline Foo& Create(ConstructorArgsT&&... args)
+inline auto Create(ConstructorArgsT&&... args) -> Foo&
 {
     return g_foos.emplace_back(std::forward< ConstructorArgsT >(args)...);
 }
 
 template< typename... ConstructorArgsT >
-inline Bar& Create(ConstructorArgsT&&... args)
+inline auto Create(ConstructorArgsT&&... args) -> Bar&
 {
     return g_bars.emplace_back(std::forward< ConstructorArgsT >(args)...);
 }
