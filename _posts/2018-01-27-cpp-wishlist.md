@@ -360,7 +360,7 @@ So the only reason I can imagine for not adding anonymous structs to the C++ sta
 There exist no integer suffix for (un)signed chars and (un)signed shorts. 
 Therefore, (implicit/explicit) casts are required to initialize these types:
 ```c++
-int main()
+auto main() -> int
 {
     auto a = 1;    //   signed int
     auto b = 2u;   // unsigned int
