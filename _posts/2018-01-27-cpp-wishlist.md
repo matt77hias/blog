@@ -157,7 +157,7 @@ auto main() -> int
 {
     auto& foo = Create< Foo >();
     auto& bar = Create< Bar >();
-	return 0;
+    return 0;
 }
 ```
 
