@@ -247,7 +247,7 @@ auto main() -> int
 {
     auto& foo = Create< Foo >();
     auto& bar = Create< Bar >();
-	return 0;
+    return 0;
 }
 ```
 **Note** that various [type traits](https://en.cppreference.com/w/cpp/header/type_traits) exist in C++. 
