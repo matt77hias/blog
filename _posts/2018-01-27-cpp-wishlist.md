@@ -296,7 +296,7 @@ auto main() -> int
 {
     auto& foo = Create< Foo >();
     auto& bar = Create< Bar >();
-	return 0;
+    return 0;
 }
 ```
 This looks much more compact, but unfortunately requires us to know all resource types in advance which will not always be the case.
