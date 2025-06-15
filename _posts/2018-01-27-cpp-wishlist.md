@@ -384,7 +384,7 @@ This can become quite verbose when using simple arithmetic functions:
 ```c++
 #include <algorithm>
 
-int main()
+auto main() -> int
 {
     // Assume that this value is not known at compile time...
     auto value  = static_cast< signed short >(9);
