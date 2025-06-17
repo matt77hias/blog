@@ -382,6 +382,7 @@ auto main() -> int
 ```
 This can become quite verbose when using simple arithmetic functions:
 ```c++
+// max
 #include <algorithm>
 
 auto main() -> int
