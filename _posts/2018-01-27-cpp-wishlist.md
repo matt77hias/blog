@@ -391,7 +391,7 @@ auto main() -> int
     auto value  = static_cast< signed short >(9);
     auto result = std::max(i, static_cast< signed short >(5));
 	
-	return 0;
+    return 0;
 }
 ```
 
