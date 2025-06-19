@@ -456,7 +456,7 @@ So we do not care about the keys. Then we can write something like this:
 
 std::map< int, char > g_map;
 
-int main()
+auto main() -> int
 {
     g_map = { {0, 'a'}, {1, 'b'}, {2, 'c'} };
     
