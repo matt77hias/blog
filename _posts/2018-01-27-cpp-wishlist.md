@@ -419,7 +419,7 @@ void throwing_func()
     throw 3; 
 }
 
-int main()
+auto main() -> int
 {
     execute(throwing_func);
 	return 0;
