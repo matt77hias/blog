@@ -422,7 +422,7 @@ void throwing_func()
 auto main() -> int
 {
     execute(throwing_func);
-	return 0;
+    return 0;
 }
 ```
 
