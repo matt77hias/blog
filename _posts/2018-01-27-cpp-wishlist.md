@@ -466,7 +466,7 @@ auto main() -> int
         std::cout << value << std::endl;
     }
 	
-	return 0;
+    return 0;
 }
 ```
 Notice that we still need to "use" the key to avoid any warnings regarding unused local variables. 
