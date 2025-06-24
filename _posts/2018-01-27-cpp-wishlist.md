@@ -407,6 +407,7 @@ C++17 adds C++11's noexcept to the type system. Though, this is not the case for
 Ideally, we want the compiler to reject the following code:
 
 ```c++
+// function
 #include <functional>
 
 void execute(std::function< void() noexcept > func)
