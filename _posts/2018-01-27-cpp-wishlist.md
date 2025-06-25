@@ -452,6 +452,7 @@ A typical application of C++17's [structured bindings](http://en.cppreference.co
 So we do not care about the keys. Then we can write something like this:
 
 ```c++
+// map
 #include <map>
 #include <iostream>
 
