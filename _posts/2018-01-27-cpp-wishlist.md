@@ -454,6 +454,7 @@ So we do not care about the keys. Then we can write something like this:
 ```c++
 // map
 #include <map>
+// cout, endl
 #include <iostream>
 
 std::map< int, char > g_map;
