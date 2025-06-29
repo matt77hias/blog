@@ -480,6 +480,7 @@ Maybe in a Python kind of fashion:
 ```c++
 // map
 #include <map>
+// cout, endl
 #include <iostream>
 
 std::map< int, char > g_map;
