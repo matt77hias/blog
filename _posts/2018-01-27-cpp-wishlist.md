@@ -461,7 +461,7 @@ std::map< int, char > g_map;
 
 auto main() -> int
 {
-    g_map = { {0, 'a'}, {1, 'b'}, {2, 'c'} };
+    g_map = { { 0, 'a' }, { 1, 'b' }, { 2, 'c' } };
     
     for (const auto& [key, value] : g_map)
 	{
