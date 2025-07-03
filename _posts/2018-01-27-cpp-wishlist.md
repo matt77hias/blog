@@ -490,7 +490,7 @@ auto main() -> int
     g_map = { { 0, 'a' }, { 1, 'b' }, { 2, 'c' } };
     
     for (const auto& [_, value] : g_map)
-	{
+    {
         std::cout << value << std::endl;
     }
 	
