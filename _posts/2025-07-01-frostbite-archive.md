@@ -10,4 +10,4 @@ date:   2025-07-01
 
 ## Dragon Age: The Veilguard
 
-{% include yt-video.html video_id="BHflToAhEs8" video_title="REAC" %}
+{% include yt-video.html video_id="BHflToAhEs8" video_title="REAC  2025 Dragon Age: The Veilguard - GI, RT, Character Creator and other systems." %}
