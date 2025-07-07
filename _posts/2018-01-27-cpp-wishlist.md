@@ -494,7 +494,7 @@ auto main() -> int
         std::cout << value << std::endl;
     }
 	
-	return 0;
+    return 0;
 }
 ```
 Of course this will not work since `_` is a valid variable name in C++. 
