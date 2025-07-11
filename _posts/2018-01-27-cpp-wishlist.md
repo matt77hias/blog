@@ -147,7 +147,7 @@ auto Create(ConstructorArgsT&&... args)
 
 template< typename ResourceT, typename... ConstructorArgsT >
 auto Create(ConstructorArgsT&&... args)
-	-> typename std::enable_if< std::is_same< Bar, ResourceT >::value, ResourceT& >::type 
+    -> typename std::enable_if< std::is_same< Bar, ResourceT >::value, ResourceT& >::type 
 {
     g_bars.emplace_back(std::forward< ConstructorArgsT >(args)...);
     return *g_bars.end();
