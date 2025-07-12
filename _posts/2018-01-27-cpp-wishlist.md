@@ -282,7 +282,7 @@ std::vector< Bar > g_bars;
 template< typename ResourceT, typename... ConstructorArgsT >
 auto Create(ConstructorArgsT&&... args) -> ResourceT&
 {
-    if constexpr (std::is_same_v< Foo, ResourceT >)
+	if constexpr (std::is_same_v< Foo, ResourceT >)
 	{
         return g_foos.emplace_back(std::forward< ConstructorArgsT >(args)...);
     } 
