@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Frostbite Archive"
+title:  "Public Frostbite Archive"
 date:   2025-07-01
 ---
 
