@@ -30,7 +30,10 @@ Lets assume that we want to convert 32-bit numeric values (unsigned/signed integ
 In order to specify this mapping in C++, we can use a class template that will be specialized for each element of the mapping:
 
 ```c++
-// int32_t, int64_t, uint32_t, uint64_t
+// int32_t
+// int64_t
+// uint32_t
+// uint64_t
 #include <cstdint>
 
 //  int32_t maps to  int64_t
@@ -78,7 +81,10 @@ This code seems pretty verbose for what it actually tries to achieve (e.g., why 
 Ideally, we would like to write something like this:
 
 ```c++
-// int32_t, int64_t, uint32_t, uint64_t
+// int32_t
+// int64_t
+// uint32_t
+// uint64_t
 #include <cstdint>
 
 //  int32_t maps to  int64_t
@@ -118,7 +124,8 @@ If we use [SFINAE](http://en.cppreference.com/w/cpp/language/sfinae) on the retu
 * **C++11**
 
 ```c++
-// enable_if, is_same
+// enable_if
+// is_same
 #include <type_traits>
 // forward
 #include <utility>
@@ -164,7 +171,8 @@ auto main() -> int
 * **C++14** (using [`std::enable_if_t`](http://en.cppreference.com/w/cpp/types/enable_if))
 
 ```c++
-// enable_if_t, is_same
+// enable_if_t
+// is_same
 #include <type_traits>
 // forward
 #include <utility>
@@ -210,7 +218,8 @@ auto main() -> int
 * **C++17** (using the new [`std::vector::emplace_back`](http://en.cppreference.com/w/cpp/container/vector/emplace_back) and [`std::is_same_v`](http://en.cppreference.com/w/cpp/types/is_same))
 
 ```c++
-// enable_if_t, is_same_v
+// enable_if_t
+// is_same_v
 #include <type_traits>
 // forward
 #include <utility>
@@ -454,7 +463,8 @@ So we do not care about the keys. Then we can write something like this:
 ```c++
 // map
 #include <map>
-// cout, endl
+// cout
+// endl
 #include <iostream>
 
 std::map< int, char > g_map;
@@ -480,7 +490,8 @@ Maybe in a Python kind of fashion:
 ```c++
 // map
 #include <map>
-// cout, endl
+// cout
+// endl
 #include <iostream>
 
 std::map< int, char > g_map;
