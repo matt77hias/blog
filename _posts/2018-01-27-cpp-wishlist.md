@@ -30,10 +30,10 @@ Lets assume that we want to convert 32-bit numeric values (unsigned/signed integ
 In order to specify this mapping in C++, we can use a class template that will be specialized for each element of the mapping:
 
 ```c++
-// int32_t
-// int64_t
-// uint32_t
-// uint64_t
+// std::int32_t
+// std::int64_t
+// std::uint32_t
+// std::uint64_t
 #include <cstdint>
 
 //  int32_t maps to  int64_t
@@ -81,10 +81,10 @@ This code seems pretty verbose for what it actually tries to achieve (e.g., why 
 Ideally, we would like to write something like this:
 
 ```c++
-// int32_t
-// int64_t
-// uint32_t
-// uint64_t
+// std::int32_t
+// std::int64_t
+// std::uint32_t
+// std::uint64_t
 #include <cstdint>
 
 //  int32_t maps to  int64_t
@@ -124,12 +124,12 @@ If we use [SFINAE](http://en.cppreference.com/w/cpp/language/sfinae) on the retu
 * **C++11**
 
 ```c++
-// enable_if
-// is_same
+// std::enable_if
+// std::is_same
 #include <type_traits>
-// forward
+// std::forward
 #include <utility>
-// vector
+// std::vector
 #include <vector>
 
 struct Foo
@@ -171,12 +171,12 @@ auto main() -> int
 * **C++14** (using [`std::enable_if_t`](http://en.cppreference.com/w/cpp/types/enable_if))
 
 ```c++
-// enable_if_t
-// is_same
+// std::enable_if_t
+// std::is_same
 #include <type_traits>
-// forward
+// std::forward
 #include <utility>
-// vector
+// std::vector
 #include <vector>
 
 struct Foo
@@ -218,12 +218,12 @@ auto main() -> int
 * **C++17** (using the new [`std::vector::emplace_back`](http://en.cppreference.com/w/cpp/container/vector/emplace_back) and [`std::is_same_v`](http://en.cppreference.com/w/cpp/types/is_same))
 
 ```c++
-// enable_if_t
-// is_same_v
+// std::enable_if_t
+// std::is_same_v
 #include <type_traits>
-// forward
+// std::forward
 #include <utility>
-// vector
+// std::vector
 #include <vector>
 
 struct Foo
@@ -269,11 +269,11 @@ If we stick to SFINAE, we will probably have to wait until C++20 which will intr
 Alternatively, we can use C++17's [`if constexpr`](http://en.cppreference.com/w/cpp/language/if):
 
 ```c++
-// is_same_v
+// std::is_same_v
 #include <type_traits>
-// forward
+// std::forward
 #include <utility>
-// vector
+// std::vector
 #include <vector>
 
 struct Foo
@@ -313,9 +313,9 @@ This looks much more compact, but unfortunately requires us to know all resource
 Ideally, we would like to write something like this:
 
 ```c++
-// forward
+// std::forward
 #include <utility>
-// vector
+// std::vector
 #include <vector>
 
 struct Foo
@@ -391,7 +391,7 @@ auto main() -> int
 ```
 This can become quite verbose when using simple arithmetic functions:
 ```c++
-// max
+// std::max
 #include <algorithm>
 
 auto main() -> int
@@ -416,7 +416,7 @@ C++17 adds C++11's noexcept to the type system. Though, this is not the case for
 Ideally, we want the compiler to reject the following code:
 
 ```c++
-// function
+// std::function
 #include <functional>
 
 void execute(std::function< void() noexcept > func)
@@ -461,10 +461,10 @@ A typical application of C++17's [structured bindings](http://en.cppreference.co
 So we do not care about the keys. Then we can write something like this:
 
 ```c++
-// map
+// std::map
 #include <map>
-// cout
-// endl
+// std::cout
+// std::endl
 #include <iostream>
 
 std::map< int, char > g_map;
@@ -488,10 +488,10 @@ Ideally, we would like to indicate "don't cares" or wildcards in the identifier 
 Maybe in a Python kind of fashion:
 
 ```c++
-// map
+// std::map
 #include <map>
-// cout
-// endl
+// std::cout
+// std::endl
 #include <iostream>
 
 std::map< int, char > g_map;
