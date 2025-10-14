@@ -1,4 +1,4 @@
-<img align="left" src="https://github.com/matt77hias/matt77hias.github.io/blob/master/res/Picture.jpg" width="120px"/>
+<img align="left" src="https://github.com/matt77hias/matt77hias.github.io/blob/master/res/Avatar.png" width="120px"/>
 
 [![License][s1]][li]
 
