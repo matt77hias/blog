@@ -10,7 +10,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="author"             content="Matthias Moulin">
-		<meta name="copyright"          content="Copyright © 2015-2024 Matthias Moulin. All Rights Reserved.">
+		<meta name="copyright"          content="Copyright © 2015-2025 Matthias Moulin. All Rights Reserved.">
 		<meta name="HandheldFriendly"   content="true">
 		<meta name="MobileOptimized"    content="320">
 		<meta name="twitter:card"       content="summary_large_image">
@@ -28,6 +28,7 @@
 		<link rel="stylesheet"        href="{{site.baseurl}}/css/main.css"   type="text/css">
 		<link rel="stylesheet"        href="{{site.baseurl}}/css/syntax.css" type="text/css">
 		<link rel="stylesheet"        href="{{site.baseurl}}/css/footer.css" type="text/css">
+		<link rel="stylesheet"        href="{{site.baseurl}}/css/video.css"  type="text/css">
 		<script src="{{site.baseurl}}/js/google-analytics.js" async          type="text/javascript"></script>
 		<script src="{{site.baseurl}}/js/mathjax.js"                         type="text/x-mathjax-config"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript"></script>
@@ -39,9 +40,7 @@
 	<body style="background-color: rgb(255, 255, 255)">
 		<script src="{{site.baseurl}}/js/theme.min.js" type="text/javascript"></script>
 
-		<header>
-			<a href="https://matt77hias.github.io/blog.html"><div class="home"></div></a>
-		</header>
+		{% include header.html %}
 
 		<main>
     		<article>
@@ -49,9 +48,7 @@
     		</article>
     	</main>
 
-		<footer>
-			<p class="copyright">Copyright © 2015-2024 Matthias Moulin. All Rights Reserved.</p>
-		</footer>
+		{% include footer.html %}
 	</body>
 
 </html>

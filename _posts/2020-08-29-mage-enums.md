@@ -8,7 +8,7 @@ One annoying shortcoming of both scoped (i.e. `enum class`) and unscoped enums i
 For scoped enum types no bitwise definition will be found. For unscoped enum types the result type will be the underlying integral type.
 
 ```c++
-// same_as
+// std::same_as
 #include <concepts>
 
 enum A : unsigned int
@@ -23,7 +23,7 @@ enum class B : unsigned int
     Bar
 };
 
-int main()
+auto main() -> int
 {
     auto unscoped = Foo | Bar;
     static_assert(std::same_as< decltype(unscoped), unsigned int >);
@@ -39,7 +39,7 @@ int main()
 Given that enums are typically used to compose flags, this behavior is very inconvenient and will require many explicit cast operators to circumvent.
 
 ```c++
-// underlying_type_t
+// std::underlying_type_t
 #include <type_traits>
 
 enum A : unsigned int
@@ -54,7 +54,7 @@ enum class B : unsigned int
     Bar
 };
 
-int main()
+auto main() -> int
 {
     A unscoped = static_cast< A >(Foo | Bar);
 

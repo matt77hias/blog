@@ -34,7 +34,7 @@ As we will see, the structure of these candidate partitions differ between diffe
 
 In case of a binary tree with axis-aligned voxels, the BSP is called a *kd-tree* or *rectilinear BSP*.
 
-<div align="center"><img src="http://i.stack.imgur.com/Q40LG.jpg"></div>
+<div align="center"><img src="https://i.sstatic.net/Q40LG.jpg"></div>
 
 ##### Geometric primitives of the child voxels
 * Geometric primitives whose AABB is to the left of the <span style="color:purple;">splitting plane</span> belong to the <span style="color:green;">left</span> child voxel. 
@@ -42,7 +42,7 @@ In case of a binary tree with axis-aligned voxels, the BSP is called a *kd-tree*
 * Geometric primitives whose AABB is straddling the <span style="color:purple;">splitting plane</span> belong to both child voxels.
 
 ##### AABBs of the child voxels
-The AABB of both child voxels can be trivially calculated given the <span style="color:blue;">parent</span> voxel and the <span style="color:purple;">splitting plane</span>. The spatial union of the AABB of both child voxels is equal to the <span style="color:blue;">parent</span> voxel (none of the six surrounding planes is tight).
+The AABB of both child voxels can be trivially computed given the <span style="color:blue;">parent</span> voxel and the <span style="color:purple;">splitting plane</span>. The spatial union of the AABB of both child voxels is equal to the <span style="color:blue;">parent</span> voxel (none of the six surrounding planes is tight).
 
 *Split clipping* is a possible optimization (i.e. clipping the geometric primitives against the <span style="color:purple;">splitting plane</span> and/or the AABB of the <span style="color:blue;">parent</span> voxel). It is possible that the AABB of a geometric primitive straddles the <span style="color:purple;">splitting plane</span>, but the actual geometric primitive only lies on one side of the <span style="color:purple;">splitting plane</span>. It is even possible that the AABB of a geometric primitive overlaps with a <span style="color:blue;">parent</span> voxel, but not the geometric primitive associated with this AABB.
 
@@ -53,7 +53,7 @@ The AABB of both child voxels can be trivially calculated given the <span style=
 * Geometric primitives lying outside the <span style="color:blue;">parent</span> voxel belong to none of the child voxels.
 
 ##### AABBs of the child voxels
-The AABB of both child voxels can be trivially calculated given the <span style="color:blue;">parent</span> voxel and the <span style="color:purple;">splitting plane</span>. The spatial union of the AABB of both child voxels is equal to the <span style="color:blue;">parent</span> voxel (none of the six surrounding planes is tight).
+The AABB of both child voxels can be trivially computed given the <span style="color:blue;">parent</span> voxel and the <span style="color:purple;">splitting plane</span>. The spatial union of the AABB of both child voxels is equal to the <span style="color:blue;">parent</span> voxel (none of the six surrounding planes is tight).
 
 * (+) $$\mathcal{O}\left(N \log N\right)$$ full sweeping-plane SAH build algorithm is possible for constructing complete BSPs.
 * (+) $$\mathcal{O}\left(N \log N\right)$$ binned SAH build algorithm for constructing complete BSPs (in parallel) is possible.
@@ -78,7 +78,7 @@ KAPLAN M. R.: The Use of Spatial Coherence in Ray Tracing. *ACM SIGGRAPH Course 
 * (non-)axis-aligned voxels
 * 6 planes of the voxels are tight
 
-<div align="center"><img src="http://i.stack.imgur.com/AhKBT.jpg"></div>
+<div align="center"><img src="https://i.sstatic.net/AhKBT.jpg"></div>
 
 ##### Geometric primitives of the child voxels
 * Geometric primitives whose centroid is to the left of the <span style="color:purple;">splitting plane</span> belong to the <span style="color:green;">left</span> child voxel. 
@@ -88,8 +88,8 @@ KAPLAN M. R.: The Use of Spatial Coherence in Ray Tracing. *ACM SIGGRAPH Course 
 ##### AABBs of the child voxels
 The AABB of both child voxels is made tight to the geometric primitives. *Note that the AABBs of the child voxels may not be larger than the AABB of the <span style="color:blue;">parent</span> voxel, which can occur while constructing SBVHs. In this case, only the overlap with the AABB of the <span style="color:blue;">parent</span> voxel will be used.*
 
-* (+) $$\mathcal{O}\left(N \log N\right)$$ full sweeping-plane SAH build algorithm is possible for constructing complete BIHs.
-* (+) $$\mathcal{O}\left(N \log N\right)$$ binned SAH build algorithm for constructing complete BIHs (in parallel) is possible.
+* (+) $$\mathcal{O}\left(N \log N\right)$$ full sweeping-plane SAH build algorithm is possible for constructing complete BVHs.
+* (+) $$\mathcal{O}\left(N \log N\right)$$ binned SAH build algorithm for constructing complete BVHs (in parallel) is possible.
 
 BVHs are traversed by testing the ray for intersection with the AABBs associated with the intermediate/child voxels.
 
@@ -109,7 +109,7 @@ RUBIN S. M., WHITTED T.: A 3-dimensional Representation for Fast Rendering of Co
 
 BIHs are also known as *Spatial Kd trees* (SKds) and *Bounded Kd trees* (B-Kds).
 
-<div align="center"><img src="http://i.stack.imgur.com/rUlS6.jpg"></div>
+<div align="center"><img src="https://i.sstatic.net/rUlS6.jpg"></div>
 
 ##### Geometric primitives of the child voxels
 * Geometric primitives whose centroid is to the left of the <span style="color:purple;">splitting plane</span> belong to the <span style="color:green;">left</span> child voxel. 
@@ -119,8 +119,8 @@ BIHs are also known as *Spatial Kd trees* (SKds) and *Bounded Kd trees* (B-Kds).
 ##### AABBs of the child voxels
 The AABB of both child voxels is similar to those of BSPs except that the AABB's plane corresponding to the <span style="color:purple;">splitting plane</span> is made tight to the geometric primitives.
 
-* (+) $$\mathcal{O}\left(N \log N\right)$$ full sweeping-plane SAH build algorithm is possible for constructing complete BVHs.
-* (+) $$\mathcal{O}\left(N \log N\right)$$ binned SAH build algorithm for constructing complete BVHs (in parallel) is possible.
+* (+) $$\mathcal{O}\left(N \log N\right)$$ full sweeping-plane SAH build algorithm is possible for constructing complete BIHs.
+* (+) $$\mathcal{O}\left(N \log N\right)$$ binned SAH build algorithm for constructing complete BIHs (in parallel) is possible.
 
 ##### References
 
@@ -144,7 +144,7 @@ Note that the papers introducing SKds, B-Kds and BIHs in computer graphics are a
 * (non-)axis-aligned voxels
 * 6 planes of the voxels are tight, but constrained by the <span style="color:purple;">splitting plane</span>
 
-<div align="center"><img src="http://i.stack.imgur.com/01qkt.jpg"></div>
+<div align="center"><img src="https://i.sstatic.net/01qkt.jpg"></div>
 
 ##### Geometric primitives of the child voxels
 * Geometric primitives to the left of the <span style="color:purple;">splitting plane</span> belong to the <span style="color:green;">left</span> child voxel. 
@@ -189,9 +189,9 @@ POPOV S., GEORGIEV I., DIMOV R., SLUSALLEK P.: Object Partitioning Considered Ha
 * (non-)axis-aligned voxels
 * combination of BVH and GK-BVH candidate partitions
 
-<div align="center"><img src="http://i.stack.imgur.com/0IkdU.jpg"></div>
+<div align="center"><img src="https://i.sstatic.net/0IkdU.jpg"></div>
 
-SBVHs are built with a combination of a BVH and GK-BVH candidate partitions.
+SBVHs are built with a combination of BVH and GK-BVH candidate partitions.
 
 * (-) $$\mathcal{O}\left(N \log N\right)$$ full sweeping-plane SAH build algorithm is **not** possible for constructing complete SBVHs due to the inclusion of GK-BVH candidate partitions (*see above*).
 * (+) $$\mathcal{O}\left(N \log N\right)$$ binned SAH build algorithm for constructing complete SBVHs (in parallel) is possible.
@@ -200,7 +200,7 @@ Since, GK-BVHs will be traversed similarly to BVHs, nothing is stopping us from 
 
 Besides being a hybrid of BVH and GK-BVH candidate partitions, the SBVH is more flexible than a GK-BVH. The best candidate partition can be refined if geometric primitives are contained in both child voxels. Each such primitive can be added to the <span style="color:green;">left</span>, <span style="color:red;">right</span> or both child voxels. After iterating these geometric primitives, we obtain the final best candidate partition for a single split decision.
 
-If we do not use optimizations such as LBVHs which uses spatial Morton coding to organize the BVH. The SBVH is conceptually the most effective acceleration data structure presented here so far, offering the best of both worlds (i.e. hybrid of spatial and object partitioning schemes). SBVHs were the preferred acceleration data structure of [NVidia OptiX Ray Tracing Engine](https://developer.nvidia.com/optix).
+If we do not use optimizations such as LBVHs which uses spatial Morton coding to organize the BVH. The SBVH is conceptually the most effective acceleration data structure presented here so far, offering the best of both worlds (i.e. hybrid of spatial and object partitioning schemes). SBVHs were the preferred acceleration data structure of the [NVidia OptiX Ray Tracing Engine](https://developer.nvidia.com/optix).
 
 ##### References
 

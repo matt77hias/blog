@@ -30,6 +30,10 @@ Lets assume that we want to convert 32-bit numeric values (unsigned/signed integ
 In order to specify this mapping in C++, we can use a class template that will be specialized for each element of the mapping:
 
 ```c++
+// std::int32_t
+// std::int64_t
+// std::uint32_t
+// std::uint64_t
 #include <cstdint>
 
 //  int32_t maps to  int64_t
@@ -64,7 +68,7 @@ template< typename T >
 using return_t = typename ReturnType< T >::type;
 
 template< typename T >
-return_t< T > convert(T value)
+auto convert(T value) -> return_t< T >
 {
     return return_t< T >(value);
 }
@@ -77,6 +81,10 @@ This code seems pretty verbose for what it actually tries to achieve (e.g., why 
 Ideally, we would like to write something like this:
 
 ```c++
+// std::int32_t
+// std::int64_t
+// std::uint32_t
+// std::uint64_t
 #include <cstdint>
 
 //  int32_t maps to  int64_t
@@ -96,7 +104,7 @@ template<>
 using return_t< float > = double;
 
 template< typename T >
-return_t< T > convert(T value)
+auto convert(T value) -> return_t< T >
 {
     return return_t< T >(value);
 }
@@ -116,7 +124,12 @@ If we use [SFINAE](http://en.cppreference.com/w/cpp/language/sfinae) on the retu
 * **C++11**
 
 ```c++
+// std::enable_if
+// std::is_same
 #include <type_traits>
+// std::forward
+#include <utility>
+// std::vector
 #include <vector>
 
 struct Foo
@@ -132,33 +145,38 @@ std::vector< Foo > g_foos;
 std::vector< Bar > g_bars;
 
 template< typename ResourceT, typename... ConstructorArgsT >
-typename std::enable_if< std::is_same< Foo, ResourceT >::value, ResourceT& >::type 
-    Create(ConstructorArgsT&&... args)
+auto Create(ConstructorArgsT&&... args)
+    -> typename std::enable_if< std::is_same< Foo, ResourceT >::value, ResourceT& >::type 
 {
     g_foos.emplace_back(std::forward< ConstructorArgsT >(args)...);
     return *g_foos.end();
 }
 
 template< typename ResourceT, typename... ConstructorArgsT >
-typename std::enable_if< std::is_same< Bar, ResourceT >::value, ResourceT& >::type 
-    Create(ConstructorArgsT&&... args)
+auto Create(ConstructorArgsT&&... args)
+    -> typename std::enable_if< std::is_same< Bar, ResourceT >::value, ResourceT& >::type 
 {
     g_bars.emplace_back(std::forward< ConstructorArgsT >(args)...);
     return *g_bars.end();
 }
 
-int main()
+auto main() -> int
 {
     auto& foo = Create< Foo >();
     auto& bar = Create< Bar >();
-	return 0;
+    return 0;
 }
 ```
 
 * **C++14** (using [`std::enable_if_t`](http://en.cppreference.com/w/cpp/types/enable_if))
 
 ```c++
+// std::enable_if_t
+// std::is_same
 #include <type_traits>
+// std::forward
+#include <utility>
+// std::vector
 #include <vector>
 
 struct Foo
@@ -174,33 +192,38 @@ std::vector< Foo > g_foos;
 std::vector< Bar > g_bars;
 
 template< typename ResourceT, typename... ConstructorArgsT >
-std::enable_if_t< std::is_same< Foo, ResourceT >::value, ResourceT& > 
-    Create(ConstructorArgsT&&... args)
+auto Create(ConstructorArgsT&&... args)
+    -> std::enable_if_t< std::is_same< Foo, ResourceT >::value, ResourceT& >
 {
     g_foos.emplace_back(std::forward< ConstructorArgsT >(args)...);
     return *g_foos.end();
 }
 
 template< typename ResourceT, typename... ConstructorArgsT >
-std::enable_if_t< std::is_same< Bar, ResourceT >::value, ResourceT& > 
-    Create(ConstructorArgsT&&... args)
+auto Create(ConstructorArgsT&&... args)
+    -> std::enable_if_t< std::is_same< Bar, ResourceT >::value, ResourceT& > 
 {
     g_bars.emplace_back(std::forward< ConstructorArgsT >(args)...);
     return *g_bars.end();
 }
 
-int main()
+auto main() -> int
 {
     auto& foo = Create< Foo >();
     auto& bar = Create< Bar >();
-	return 0;
+    return 0;
 }
 ```
 
 * **C++17** (using the new [`std::vector::emplace_back`](http://en.cppreference.com/w/cpp/container/vector/emplace_back) and [`std::is_same_v`](http://en.cppreference.com/w/cpp/types/is_same))
 
 ```c++
+// std::enable_if_t
+// std::is_same_v
 #include <type_traits>
+// std::forward
+#include <utility>
+// std::vector
 #include <vector>
 
 struct Foo
@@ -216,24 +239,24 @@ std::vector< Foo > g_foos;
 std::vector< Bar > g_bars;
 
 template< typename ResourceT, typename... ConstructorArgsT >
-std::enable_if_t< std::is_same_v< Foo, ResourceT >, ResourceT& > 
-    Create(ConstructorArgsT&&... args)
+auto Create(ConstructorArgsT&&... args)
+	-> std::enable_if_t< std::is_same_v< Foo, ResourceT >, ResourceT& >
 {
     return g_foos.emplace_back(std::forward< ConstructorArgsT >(args)...);
 }
 
 template< typename ResourceT, typename... ConstructorArgsT >
-std::enable_if_t< std::is_same_v< Bar, ResourceT >, ResourceT& > 
-    Create(ConstructorArgsT&&... args)
+auto Create(ConstructorArgsT&&... args)
+	-> std::enable_if_t< std::is_same_v< Bar, ResourceT >, ResourceT& >
 {
     return g_bars.emplace_back(std::forward< ConstructorArgsT >(args)...);
 }
 
-int main()
+auto main() -> int
 {
     auto& foo = Create< Foo >();
     auto& bar = Create< Bar >();
-	return 0;
+    return 0;
 }
 ```
 **Note** that various [type traits](https://en.cppreference.com/w/cpp/header/type_traits) exist in C++. 
@@ -246,7 +269,11 @@ If we stick to SFINAE, we will probably have to wait until C++20 which will intr
 Alternatively, we can use C++17's [`if constexpr`](http://en.cppreference.com/w/cpp/language/if):
 
 ```c++
+// std::is_same_v
 #include <type_traits>
+// std::forward
+#include <utility>
+// std::vector
 #include <vector>
 
 struct Foo
@@ -262,10 +289,10 @@ std::vector< Foo > g_foos;
 std::vector< Bar > g_bars;
 
 template< typename ResourceT, typename... ConstructorArgsT >
-ResourceT& Create(ConstructorArgsT&&... args)
+auto Create(ConstructorArgsT&&... args) -> ResourceT&
 {
     if constexpr (std::is_same_v< Foo, ResourceT >)
-	{
+    {
         return g_foos.emplace_back(std::forward< ConstructorArgsT >(args)...);
     } 
     else if constexpr (std::is_same_v< Bar, ResourceT >)
@@ -274,11 +301,11 @@ ResourceT& Create(ConstructorArgsT&&... args)
     } 
 }
 
-int main()
+auto main() -> int
 {
     auto& foo = Create< Foo >();
     auto& bar = Create< Bar >();
-	return 0;
+    return 0;
 }
 ```
 This looks much more compact, but unfortunately requires us to know all resource types in advance which will not always be the case.
@@ -286,7 +313,9 @@ This looks much more compact, but unfortunately requires us to know all resource
 Ideally, we would like to write something like this:
 
 ```c++
-#include <type_traits>
+// std::forward
+#include <utility>
+// std::vector
 #include <vector>
 
 struct Foo
@@ -302,25 +331,25 @@ std::vector< Foo > g_foos;
 std::vector< Bar > g_bars;
 
 template< typename ResourceT, typename... ConstructorArgsT >
-ResourceT& Create(ConstructorArgsT&&... args);
+auto Create(ConstructorArgsT&&... args) -> ResourceT&;
 
 template< typename... ConstructorArgsT >
-inline Foo& Create(ConstructorArgsT&&... args)
+inline auto Create(ConstructorArgsT&&... args) -> Foo&
 {
     return g_foos.emplace_back(std::forward< ConstructorArgsT >(args)...);
 }
 
 template< typename... ConstructorArgsT >
-inline Bar& Create(ConstructorArgsT&&... args)
+inline auto Create(ConstructorArgsT&&... args) -> Bar&
 {
     return g_bars.emplace_back(std::forward< ConstructorArgsT >(args)...);
 }
 
-int main()
+auto main() -> int
 {
     auto& foo = Create< Foo >();
     auto& bar = Create< Bar >();
-	return 0;
+    return 0;
 }
 ```
 
@@ -340,7 +369,7 @@ So the only reason I can imagine for not adding anonymous structs to the C++ sta
 There exist no integer suffix for (un)signed chars and (un)signed shorts. 
 Therefore, (implicit/explicit) casts are required to initialize these types:
 ```c++
-int main()
+auto main() -> int
 {
     auto a = 1;    //   signed int
     auto b = 2u;   // unsigned int
@@ -357,20 +386,21 @@ int main()
     auto k = static_cast<   signed char  >(11);
     auto l = static_cast< unsigned char  >(12);
 	
-	return 0;
+    return 0;
 }
 ```
 This can become quite verbose when using simple arithmetic functions:
 ```c++
+// std::max
 #include <algorithm>
 
-int main()
+auto main() -> int
 {
     // Assume that this value is not known at compile time...
     auto value  = static_cast< signed short >(9);
     auto result = std::max(i, static_cast< signed short >(5));
 	
-	return 0;
+    return 0;
 }
 ```
 
@@ -386,6 +416,7 @@ C++17 adds C++11's noexcept to the type system. Though, this is not the case for
 Ideally, we want the compiler to reject the following code:
 
 ```c++
+// std::function
 #include <functional>
 
 void execute(std::function< void() noexcept > func)
@@ -398,10 +429,10 @@ void throwing_func()
     throw 3; 
 }
 
-int main()
+auto main() -> int
 {
     execute(throwing_func);
-	return 0;
+    return 0;
 }
 ```
 
@@ -430,22 +461,25 @@ A typical application of C++17's [structured bindings](http://en.cppreference.co
 So we do not care about the keys. Then we can write something like this:
 
 ```c++
+// std::map
 #include <map>
+// std::cout
+// std::endl
 #include <iostream>
 
 std::map< int, char > g_map;
 
-int main()
+auto main() -> int
 {
-    g_map = { {0, 'a'}, {1, 'b'}, {2, 'c'} };
+    g_map = { { 0, 'a' }, { 1, 'b' }, { 2, 'c' } };
     
     for (const auto& [key, value] : g_map)
-	{
+    {
         (void)key; // Unused
         std::cout << value << std::endl;
     }
 	
-	return 0;
+    return 0;
 }
 ```
 Notice that we still need to "use" the key to avoid any warnings regarding unused local variables. 
@@ -454,21 +488,24 @@ Ideally, we would like to indicate "don't cares" or wildcards in the identifier 
 Maybe in a Python kind of fashion:
 
 ```c++
+// std::map
 #include <map>
+// std::cout
+// std::endl
 #include <iostream>
 
 std::map< int, char > g_map;
 
-int main()
+auto main() -> int
 {
-    g_map = { {0, 'a'}, {1, 'b'}, {2, 'c'} };
+    g_map = { { 0, 'a' }, { 1, 'b' }, { 2, 'c' } };
     
     for (const auto& [_, value] : g_map)
-	{
+    {
         std::cout << value << std::endl;
     }
 	
-	return 0;
+    return 0;
 }
 ```
 Of course this will not work since `_` is a valid variable name in C++. 
