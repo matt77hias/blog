@@ -13,3 +13,5 @@ Some things I worked on at Frostbite.
 ## Dragon Age: The Veilguard
 
 {% include yt-video.html video_id="BHflToAhEs8" video_title="REAC  2025 Dragon Age: The Veilguard - GI, RT, Character Creator and other systems." %}
+
+## [Flexible and Extensible Shader Authoring in Frostbite with Serac](https://advances.realtimerendering.com/s2024/index.html#serac)
