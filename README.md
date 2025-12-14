@@ -15,4 +15,4 @@ My personal [blog](https://matt77hias.github.io/blog.html).
 * [Jekyll](https://github.com/jekyll/jekyll) [[MIT License](https://github.com/jekyll/jekyll/blob/master/LICENSE)]
 * [MathJax](https://github.com/mathjax/MathJax) [[Apache License 2.0](https://github.com/mathjax/MathJax/blob/master/LICENSE)]
 
-<p align="center">Copyright © 2015-2025 Matthias Moulin. All Rights Reserved.</p>
+<p align="center">Copyright © 2015-2026 Matthias Moulin. All Rights Reserved.</p>
