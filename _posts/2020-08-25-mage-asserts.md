@@ -44,7 +44,7 @@ Unfortunately, MAGE already uses custom asserts (`MAGE_ASSERT`) with logging sup
 #define MAGE_ENSURE(expression, ...)                                          \
 	do                                                                        \
 	{                                                                         \
-		if ((expression))                                                     \
+		if (not (expression))                                                 \
 		{                                                                     \
 			::mage::details::LogAssert(#expression,                           \
 									   MAGE_SOURCE_LOCATION,                  \
@@ -79,7 +79,7 @@ Fortunately, C++20 added [std::is_constant_evaluated](https://en.cppreference.co
 #define MAGE_ENSURE(expression, ...)                                          \
 	do                                                                        \
 	{                                                                         \
-		if ((expression)) [[unlikely]]                                        \
+		if (not (expression)) [[unlikely]]                                    \
 		{                                                                     \
 			if (std::is_constant_evaluated())                                 \
 			{                                                                 \
@@ -136,7 +136,7 @@ The trick consists of ignoring any logging. For expressions that are not evaluat
 #define MAGE_ENSURE(expression, ...)                                          \
 	do                                                                        \
 	{                                                                         \
-		if ((expression)) [[unlikely]]                                        \
+		if (not (expression)) [[unlikely]]                                    \
 		{                                                                     \
 			if (std::is_constant_evaluated())                                 \
 			{                                                                 \
@@ -193,7 +193,8 @@ Which can be used in `constexpr` enum-to-enum conversion functions:
 
 ```c++
 [[nodiscard]]
-constexpr D3D12_FILL_MODE Convert(RasterizerState::FillMode input) noexcept
+constexpr auto Convert(RasterizerState::FillMode input)
+    noexcept -> D3D12_FILL_MODE
 {
 	switch (input)
 	{
