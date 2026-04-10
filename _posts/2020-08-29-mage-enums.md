@@ -23,7 +23,8 @@ enum class B : unsigned int
     Bar
 };
 
-auto main() -> int
+auto main()
+    -> int
 {
     auto unscoped = Foo | Bar;
     static_assert(std::same_as< decltype(unscoped), unsigned int >);
@@ -54,7 +55,8 @@ enum class B : unsigned int
     Bar
 };
 
-auto main() -> int
+auto main()
+    -> int
 {
     A unscoped = static_cast< A >(Foo | Bar);
 
