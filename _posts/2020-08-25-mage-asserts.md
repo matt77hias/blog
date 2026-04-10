@@ -10,13 +10,15 @@ While browsing Microsoft's public [STL](https://github.com/microsoft/STL) implem
 // assert
 #include <cassert>
 
-constexpr int f(int i) noexcept
+constexpr auto f(int i)
+    noexcept -> int
 {
     assert(0 <= i); // Ensure i is non-negative integer
     return i;
 }
 
-int main()
+auto main()
+    -> int
 {
     return f(-1); // Pass negative integer
 }
