@@ -1,4 +1,5 @@
 /* Solarized Light — default */
+.post-content .highlight,
 .highlight { background-color: #ffffff; color: #5b6f78 }
 .highlight .err { color: #5b6f78 } /* Error */
 .highlight .o  { color: #5b6f78 } /* Operator */
