@@ -1,5 +1,6 @@
 ---
 layout: post
+math: true
 title:  "Linear, Gamma and sRGB Color Spaces"
 date:   2018-07-01
 ---

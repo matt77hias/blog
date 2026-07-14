@@ -1,5 +1,6 @@
 ---
 layout: post
+math: true
 title:  "NDC to Projection to Camera Space"
 date:   2017-10-19
 ---

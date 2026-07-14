@@ -510,9 +510,3 @@ auto main() -> int
 ```
 Of course this will not work since `_` is a valid variable name in C++. 
 Alternatively, the [paper](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0144r2.pdf) of structured bindings proposes `std::ignore`, but arguments not to add it to the standard since it is too premature in the absence of pattern matching.
-
-# Pattern matching
-
-# Reflection
-
-# Serialization and deserialization

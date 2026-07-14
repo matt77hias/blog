@@ -1,5 +1,6 @@
 ---
 layout: post
+math: true
 title:  "Voxel Cone Tracing"
 date:   2018-08-19
 ---

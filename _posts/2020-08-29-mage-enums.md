@@ -1,5 +1,7 @@
 ---
 layout: post
+published: false
+published: false
 title:  "🧙 MAGE: Enums"
 date:   2020-08-29
 ---

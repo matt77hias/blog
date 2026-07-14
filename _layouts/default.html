@@ -1,54 +1,60 @@
 ---
 ---
 <!doctype html>
+<html lang="en">
 
-<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="main-site"          content="{{site.main_site}}">
+        <meta name="author"             content="Matthias Moulin">
+        <meta name="viewport"           content="width=device-width, initial-scale=1.0">
+        <meta name="theme-color"        content="#34d399">
+        <meta name="color-scheme"       content="dark light">
+        <meta name="twitter:card"       content="summary_large_image">
+        <meta name="twitter:site"       content="@matt77hias">
+        <meta name="twitter:title"      content="{{page.title}}">
+        {% if page.image %}<meta name="twitter:image" content="{{site.main_site}}{{site.baseurl}}/{{page.image}}">{% endif %}
+        <meta property="og:type"        content="article"/>
+        <meta property="article:author" content="Moulin, Matthias"/>
+        <meta property="og:title"       content="{{page.title}}"/>
+        <meta property="og:url"         content="{{site.main_site}}{{site.baseurl}}{{page.url}}"/>
+        {% if page.image %}<meta property="og:image" content="{{site.main_site}}{{site.baseurl}}/{{page.image}}"/>{% endif %}
+        <title>{{ page.title }} — Matthias Moulin</title>
+        <link rel="preconnect"    href="https://www.googletagmanager.com">
+        <link rel="dns-prefetch"  href="https://www.googletagmanager.com">
+        <link rel="icon"          href="{{site.main_site}}/favicon.ico" type="image/x-icon">
+        <link rel="stylesheet"    href="{{site.main_site}}/src/css/tokens.css">
+        <link rel="stylesheet"    href="{{site.main_site}}/src/css/base.css">
+        <link rel="stylesheet"    href="{{site.main_site}}/src/css/header.css">
+        <link rel="stylesheet"    href="{{site.main_site}}/src/css/navigation.css">
+        <link rel="stylesheet"    href="{{site.main_site}}/src/css/profile.css">
+        <link rel="stylesheet"    href="{{site.baseurl}}/css/blog.css">
+        <link rel="stylesheet"    href="{{site.baseurl}}/css/syntax.css">
+        <link rel="stylesheet"    href="{{site.main_site}}/src/css/video.css">
+        <script src="{{site.main_site}}/src/js/theme-init.js"></script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-SD3ZFZNHLD"></script>
+        <script src="{{site.main_site}}/src/js/google-analytics.js"></script>
+        {% if page.math %}
+        <script src="{{site.main_site}}/src/js/mathjax.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+        {% endif %}
+    </head>
 
-	<!------------------------------------------------------------------------>
-	<!-- Head                                                               -->
-	<!------------------------------------------------------------------------>
-	<head>
-		<meta charset="utf-8">
-		<meta name="author"             content="Matthias Moulin">
-		<meta name="copyright"          content="Copyright © 2015-2026 Matthias Moulin. All Rights Reserved.">
-		<meta name="HandheldFriendly"   content="true">
-		<meta name="MobileOptimized"    content="320">
-		<meta name="twitter:card"       content="summary_large_image">
-		<meta name="twitter:image"      content="https://matt77hias.github.io{{site.baseurl}}/{{page.image}}">
-		<meta name="twitter:site"       content="@matt77hias">
-		<meta name="twitter:title"      content="{{page.title}}">
-		<meta name="viewport"           content="width=device-width, initial-scale=1.0">
-		<meta property='article:author' content="Moulin, Matthias"/>
-		<meta property="og:image"       content="https://matt77hias.github.io{{site.baseurl}}/{{page.image}}"/>
-		<meta property="og:title"       content="{{page.title}}"/>
-		<meta property="og:url"         content="https://matt77hias.github.io{{site.baseurl}}{{page.url}}"/>
-		<title>{{ page.title }}</title>
-		<link rel="icon" 	          href="{{site.baseurl}}/favicon.ico"	 type="image/x-icon">
-		<link rel="shortcut icon"     href="{{site.baseurl}}/favicon.ico"    type="image/x-icon">
-		<link rel="stylesheet"        href="{{site.baseurl}}/css/main.css"   type="text/css">
-		<link rel="stylesheet"        href="{{site.baseurl}}/css/syntax.css" type="text/css">
-		<link rel="stylesheet"        href="{{site.baseurl}}/css/footer.css" type="text/css">
-		<link rel="stylesheet"        href="{{site.baseurl}}/css/video.css"  type="text/css">
-		<script src="{{site.baseurl}}/js/google-analytics.js" async          type="text/javascript"></script>
-		<script src="{{site.baseurl}}/js/mathjax.js"                         type="text/x-mathjax-config"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript"></script>
-	</head>
+    <body id="blog-post">
+        <a class="skip-link" href="#post-main">Skip to content</a>
 
-	<!------------------------------------------------------------------------>
-	<!-- Body                                                               -->
-	<!------------------------------------------------------------------------>
-	<body style="background-color: rgb(255, 255, 255)">
-		<script src="{{site.baseurl}}/js/theme.min.js" type="text/javascript"></script>
+        <main id="post-main" tabindex="-1">
+            <article>
+                {{content}}
+            </article>
+        </main>
 
-		{% include header.html %}
+        <footer>
+            <img class="footer-avatar" alt="" width="36" height="36">
+            <p class="copyright"></p>
+        </footer>
 
-		<main>
-    		<article>
-    			{{content}}
-    		</article>
-    	</main>
-
-		{% include footer.html %}
-	</body>
+        <script src="{{site.baseurl}}/js/layout.js"></script>
+    </body>
 
 </html>
