@@ -40,7 +40,7 @@ $$L_o\!\left(x, \hat\omega_o\right) \approx k_d \sum_{j = 1}^{N} \hat{W}_j L_v\!
 
 We can use for example, the following six cones, each with an aperture of $$\frac{\pi}{6}$$.
 
-<div align="center"><img src="https://i.stack.imgur.com/TbALB.png"></div>
+<div align="center"><img src="/blog/assets/posts/voxel-cone-tracing/cones.png"></div>
 
 The normalized weight of the blue cone about the surface normal is equal to:
 
@@ -78,7 +78,7 @@ Marching continues until we reach an accumulated opacity of one or more:
     	distance ← distance + diameter // marching
     return Lv
 
-<div align="center"><img src="https://i.stack.imgur.com/dGx7V.png"></div>
+<div align="center"><img src="/blog/assets/posts/voxel-cone-tracing/tracing.png"></div>
 
 # References
 
