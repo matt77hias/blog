@@ -149,7 +149,7 @@ main > article:last-child  { margin-bottom: 0; }
 
 .post-content pre,
 .post-content code {
-    font-family: 'Courier New', Courier, monospace;
+    font-family: 'DejaVu Sans Mono', 'Courier New', Courier, monospace;
     font-size: 0.85em;
 }
 
