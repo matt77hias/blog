@@ -23,7 +23,6 @@
     // ── Icon sprite ────────────────────────────────────────────────────────────
 
     function loadIconSprite() {
-        // Try same-origin first (works locally and in production at /blog/)
         var localUrl  = BASE + '/assets/icons.svg';
         var remoteUrl = ROOT + '/assets/icons.svg';
         function inject(svgText) {
@@ -35,17 +34,49 @@
                 document.body.insertBefore(el, document.body.firstChild);
             }
         }
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', localUrl, true);
-        xhr.onload = function () {
-            if (xhr.status === 200) { inject(xhr.responseText); return; }
-            // Fallback to main site
-            var xhr2 = new XMLHttpRequest();
-            xhr2.open('GET', remoteUrl, true);
-            xhr2.onload = function () { if (xhr2.status === 200) inject(xhr2.responseText); };
-            xhr2.send();
-        };
-        xhr.send();
+        function fetchRemote() {
+            fetch(remoteUrl)
+                .then(function (r) { return r.ok ? r.text() : null; })
+                .then(function (text) { if (text) inject(text); })
+                .catch(function () {});
+        }
+        fetch(localUrl)
+            .then(function (r) { return r.ok ? r.text() : null; })
+            .then(function (text) { if (text) inject(text); else fetchRemote(); })
+            .catch(fetchRemote);
+    }
+
+    // ── Glitch toggle ──────────────────────────────────────────────────────────
+
+    var GLITCH_KEY = 'glitchDisabled';
+
+    function isGlitchDisabled() {
+        try { return localStorage.getItem(GLITCH_KEY) === '1'; } catch (e) { return false; }
+    }
+
+    function applyGlitchState(btn, disabled) {
+        document.body.classList.toggle('glitch-disabled', disabled);
+        if (!btn) return;
+        var label = disabled ? 'Enable glitch effect' : 'Disable glitch effect';
+        btn.setAttribute('aria-pressed', String(disabled));
+        btn.setAttribute('aria-label',   label);
+        btn.setAttribute('title',        label);
+        btn.setAttribute('data-tooltip', label);
+        btn.classList.toggle('active', disabled);
+    }
+
+    function initGlitchToggle() {
+        var btn = document.getElementById('glitch-toggle');
+        if (!btn) return;
+        applyGlitchState(btn, isGlitchDisabled());
+        btn.addEventListener('click', function () {
+            var disabled = !isGlitchDisabled();
+            try {
+                if (disabled) localStorage.setItem(GLITCH_KEY, '1');
+                else          localStorage.removeItem(GLITCH_KEY);
+            } catch (e) {}
+            applyGlitchState(btn, disabled);
+        });
     }
 
     // ── Header ─────────────────────────────────────────────────────────────────
@@ -60,11 +91,15 @@
         var btns = document.createElement('div');
         btns.className = 'header-buttons';
 
+        var glitchDisabled = isGlitchDisabled();
         var glitchBtn = document.createElement('button');
         glitchBtn.id = 'glitch-toggle';
-        glitchBtn.setAttribute('aria-label', 'Disable glitch effect');
-        glitchBtn.setAttribute('title', 'Disable glitch effect');
-        glitchBtn.setAttribute('aria-pressed', 'false');
+        var glitchLabel = glitchDisabled ? 'Enable glitch effect' : 'Disable glitch effect';
+        glitchBtn.setAttribute('aria-label',   glitchLabel);
+        glitchBtn.setAttribute('title',        glitchLabel);
+        glitchBtn.setAttribute('data-tooltip', glitchLabel);
+        glitchBtn.setAttribute('aria-pressed', String(glitchDisabled));
+        document.body.classList.toggle('glitch-disabled', glitchDisabled);
         glitchBtn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-glitch-wave"/></svg>';
         btns.appendChild(glitchBtn);
 
@@ -133,35 +168,51 @@
     // ── Footer ──────────────────────────────────────────────────────────────────
 
     function initFooter() {
-        // Set avatar immediately from local copy so it always shows
         var avatar = document.querySelector('footer .footer-avatar');
+        var copy   = document.querySelector('footer .copyright');
+        var year   = new Date().getFullYear();
+
         if (avatar) {
+            avatar.loading = 'lazy';
             avatar.src = ROOT + '/assets/Avatar.png';
             avatar.alt = 'Matthias Moulin';
         }
 
-        // Fetch site.json for copyright details; fall back to hardcoded values on failure
-        var copy = document.querySelector('footer .copyright');
-        var year = new Date().getFullYear();
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', ROOT + '/data/site.json', true);
-        xhr.onload = function () {
-            if (xhr.status !== 200) {
+        fetch(ROOT + '/data/site.json')
+            .then(function (r) { return r.ok ? r.json() : null; })
+            .then(function (site) {
+                if (!site) {
+                    if (copy) copy.textContent = 'Copyright © 2015–' + year + ' Matthias Moulin. All Rights Reserved.';
+                    return;
+                }
+                if (avatar) avatar.alt = site.avatarAlt;
+                if (copy) copy.textContent = 'Copyright © ' + site.copyrightStart + '–' + year + ' ' + site.author + '. All Rights Reserved.';
+            })
+            .catch(function () {
                 if (copy) copy.textContent = 'Copyright © 2015–' + year + ' Matthias Moulin. All Rights Reserved.';
-                return;
-            }
-            var site;
-            try { site = JSON.parse(xhr.responseText); } catch (e) { return; }
-            if (avatar) avatar.alt = site.avatarAlt;
-            if (copy) copy.textContent = 'Copyright © ' + site.copyrightStart + '–' + year + ' ' + site.author + '. All Rights Reserved.';
-        };
-        xhr.onerror = function () {
-            if (copy) copy.textContent = 'Copyright © 2015–' + year + ' Matthias Moulin. All Rights Reserved.';
-        };
-        xhr.send();
+            });
     }
 
     // ── Theme ────────────────────────────────────────────────────────────────────
+
+    function syncGiscusTheme(theme) {
+        var iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage(
+            { giscus: { setConfig: { theme: theme === 'light' ? 'light' : 'dark' } } },
+            'https://giscus.app'
+        );
+    }
+
+    function watchGiscusTheme() {
+        var observer = new MutationObserver(function () {
+            var iframe = document.querySelector('iframe.giscus-frame');
+            if (!iframe) return;
+            observer.disconnect();
+            syncGiscusTheme(document.documentElement.dataset.theme || 'dark');
+        });
+        observer.observe(document.body, { childList: true, subtree: true });
+    }
 
     function initTheme() {
         var root = document.documentElement;
@@ -181,6 +232,7 @@
                 var accent = getComputedStyle(root).getPropertyValue('--color-accent').trim();
                 if (accent) meta.setAttribute('content', accent);
             }
+            syncGiscusTheme(theme);
         }
 
         applyTheme(root.dataset.theme || 'dark');
@@ -218,54 +270,53 @@
     function initProfile() {
         var container = document.querySelector('.profile');
         if (!container) return;
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', ROOT + '/data/profile-links.json', true);
-        xhr.onload = function () {
-            if (xhr.status !== 200) return;
-            var links;
-            try { links = JSON.parse(xhr.responseText); } catch (e) { return; }
-            var nav = document.createElement('nav');
-            nav.setAttribute('aria-label', 'Social profiles');
-            var ul = document.createElement('ul');
-            ul.className = 'social-list';
-            nav.appendChild(ul);
 
-            var currentGroup = null;
-            for (var i = 0; i < links.length; i++) {
-                var link = links[i];
-                if (link.group && link.group !== currentGroup) {
-                    if (currentGroup !== null) {
-                        var divider = document.createElement('li');
-                        divider.className = 'social-divider';
-                        divider.setAttribute('aria-hidden', 'true');
-                        ul.appendChild(divider);
+        fetch(ROOT + '/data/profile-links.json')
+            .then(function (r) { return r.ok ? r.json() : null; })
+            .then(function (links) {
+                if (!links) return;
+                var nav = document.createElement('nav');
+                nav.setAttribute('aria-label', 'Social profiles');
+                var ul = document.createElement('ul');
+                ul.className = 'social-list';
+                nav.appendChild(ul);
+
+                var currentGroup = null;
+                for (var i = 0; i < links.length; i++) {
+                    var link = links[i];
+                    if (link.group && link.group !== currentGroup) {
+                        if (currentGroup !== null) {
+                            var divider = document.createElement('li');
+                            divider.className = 'social-divider';
+                            divider.setAttribute('aria-hidden', 'true');
+                            ul.appendChild(divider);
+                        }
+                        currentGroup = link.group;
                     }
-                    currentGroup = link.group;
+                    var cleanUrl = link.url.split(MAGIC).join('');
+                    if (/^javascript:/i.test(cleanUrl)) continue;
+                    var li = document.createElement('li');
+                    var a  = document.createElement('a');
+                    a.href = cleanUrl;
+                    a.className = 'social-link';
+                    a.setAttribute('aria-label', link.label);
+                    a.setAttribute('data-tooltip', link.label);
+                    var rel = link.rel ? [link.rel, 'noopener', 'noreferrer'] : ['noopener', 'noreferrer'];
+                    a.rel = rel.join(' ');
+                    if (!NO_NEW_TAB.some(function (p) { return cleanUrl.indexOf(p) === 0; })) a.target = '_blank';
+                    var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+                    svg.setAttribute('class', 'social-icon');
+                    svg.setAttribute('aria-hidden', 'true');
+                    var use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
+                    use.setAttribute('href', '#icon-' + link.icon);
+                    svg.appendChild(use);
+                    a.appendChild(svg);
+                    li.appendChild(a);
+                    ul.appendChild(li);
                 }
-                var cleanUrl = link.url.split(MAGIC).join('');
-                if (/^javascript:/i.test(cleanUrl)) continue;
-                var li = document.createElement('li');
-                var a  = document.createElement('a');
-                a.href = cleanUrl;
-                a.className = 'social-link';
-                a.setAttribute('aria-label', link.label);
-                a.setAttribute('data-tooltip', link.label);
-                var rel = link.rel ? [link.rel, 'noopener', 'noreferrer'] : ['noopener', 'noreferrer'];
-                a.rel = rel.join(' ');
-                if (!NO_NEW_TAB.some(function (p) { return cleanUrl.indexOf(p) === 0; })) a.target = '_blank';
-                var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-                svg.setAttribute('class', 'social-icon');
-                svg.setAttribute('aria-hidden', 'true');
-                var use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
-                use.setAttribute('href', '#icon-' + link.icon);
-                svg.appendChild(use);
-                a.appendChild(svg);
-                li.appendChild(a);
-                ul.appendChild(li);
-            }
-            container.appendChild(nav);
-        };
-        xhr.send();
+                container.appendChild(nav);
+            })
+            .catch(function () {});
     }
 
     // ── Bootstrap ─────────────────────────────────────────────────────────────────
@@ -284,7 +335,9 @@
     loadIconSprite();
     initTheme();
     initNav();
+    initGlitchToggle();
     initFooter();
     initProfile();
+    watchGiscusTheme();
 
 }());

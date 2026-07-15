@@ -2,6 +2,8 @@
 layout: post
 title:  "Candidate Partitions of Hierarchical Acceleration Data Structures for Ray Tracing"
 date:   2018-02-04
+math:   true
+description: ""
 ---
 
 # Partitioning Schemes
@@ -34,7 +36,7 @@ As we will see, the structure of these candidate partitions differ between diffe
 
 In case of a binary tree with axis-aligned voxels, the BSP is called a *kd-tree* or *rectilinear BSP*.
 
-<div align="center"><img src="https://i.sstatic.net/Q40LG.jpg"></div>
+<div align="center"><img src="/assets/posts/candidate-partitions-acceleration-data-structures/bsp.jpg"></div>
 
 ##### Geometric primitives of the child voxels
 * Geometric primitives whose AABB is to the left of the <span style="color:purple;">splitting plane</span> belong to the <span style="color:green;">left</span> child voxel. 
@@ -78,7 +80,7 @@ KAPLAN M. R.: The Use of Spatial Coherence in Ray Tracing. *ACM SIGGRAPH Course 
 * (non-)axis-aligned voxels
 * 6 planes of the voxels are tight
 
-<div align="center"><img src="https://i.sstatic.net/AhKBT.jpg"></div>
+<div align="center"><img src="/assets/posts/candidate-partitions-acceleration-data-structures/bvh.jpg"></div>
 
 ##### Geometric primitives of the child voxels
 * Geometric primitives whose centroid is to the left of the <span style="color:purple;">splitting plane</span> belong to the <span style="color:green;">left</span> child voxel. 
@@ -109,7 +111,7 @@ RUBIN S. M., WHITTED T.: A 3-dimensional Representation for Fast Rendering of Co
 
 BIHs are also known as *Spatial Kd trees* (SKds) and *Bounded Kd trees* (B-Kds).
 
-<div align="center"><img src="https://i.sstatic.net/rUlS6.jpg"></div>
+<div align="center"><img src="/assets/posts/candidate-partitions-acceleration-data-structures/bih.jpg"></div>
 
 ##### Geometric primitives of the child voxels
 * Geometric primitives whose centroid is to the left of the <span style="color:purple;">splitting plane</span> belong to the <span style="color:green;">left</span> child voxel. 
@@ -144,7 +146,7 @@ Note that the papers introducing SKds, B-Kds and BIHs in computer graphics are a
 * (non-)axis-aligned voxels
 * 6 planes of the voxels are tight, but constrained by the <span style="color:purple;">splitting plane</span>
 
-<div align="center"><img src="https://i.sstatic.net/01qkt.jpg"></div>
+<div align="center"><img src="/assets/posts/candidate-partitions-acceleration-data-structures/gkbvh.jpg"></div>
 
 ##### Geometric primitives of the child voxels
 * Geometric primitives to the left of the <span style="color:purple;">splitting plane</span> belong to the <span style="color:green;">left</span> child voxel. 
@@ -189,7 +191,7 @@ POPOV S., GEORGIEV I., DIMOV R., SLUSALLEK P.: Object Partitioning Considered Ha
 * (non-)axis-aligned voxels
 * combination of BVH and GK-BVH candidate partitions
 
-<div align="center"><img src="https://i.sstatic.net/0IkdU.jpg"></div>
+<div align="center"><img src="/assets/posts/candidate-partitions-acceleration-data-structures/sbvh.jpg"></div>
 
 SBVHs are built with a combination of BVH and GK-BVH candidate partitions.
 

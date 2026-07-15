@@ -2,6 +2,7 @@
 layout: post
 title:  "Reducing Shader Binding Dependencies"
 date:   2017-09-07
+description: ""
 ---
 
 Constant buffer, shader resource view, sampler and unordered access view variables are bound to [registers](https://msdn.microsoft.com/en-us/library/windows/desktop/dd607359(v=vs.85).aspx) in HLSL of type `b`, `t`, `s` and `u`, respectively. The binding slots of these registers, which must be known at compile-time, are typically explicitly hardcoded in and spread among the various shaders.

@@ -2,6 +2,7 @@
 layout: post
 title:  "The Constructible Array"
 date:   2018-08-08
+description: ""
 ---
 
 [MAGE v0](https://github.com/matt77hias/MAGE-v0)'s (mathematical) vector types have come a long way.

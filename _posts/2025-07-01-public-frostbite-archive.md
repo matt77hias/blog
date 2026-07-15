@@ -2,6 +2,7 @@
 layout: post
 title:  "Public Frostbite Archive"
 date:   2025-07-01
+description: ""
 ---
 
 Some things I worked on at Frostbite.

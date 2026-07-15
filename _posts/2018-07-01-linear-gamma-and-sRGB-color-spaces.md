@@ -3,6 +3,7 @@ layout: post
 math: true
 title:  "Linear, Gamma and sRGB Color Spaces"
 date:   2018-07-01
+description: ""
 ---
 
 *This post is based on a [reply](https://github.com/ocornut/imgui/issues/578#issuecomment-379467586) of mine to an [ImGui](https://github.com/ocornut/imgui/) issue (and discussion) about sRGB and linear color spaces.*
@@ -24,7 +25,7 @@ These linear-to-gamma color space conversions seem like unnecessary overhead fro
 
 From a perceptual point of view, removing the need for gamma correction and using a monitor where computed colors are proportional to the corresponding actual colors is actually a bad idea. Typically, actual colors are represented with 8 (or 10) bits for each of the red, green and blue channel. This quantization only supports 256 (or 1024) different colors. Here, a 0 value represents completely black and a 255 (or a 1023) value represents completely white. But what about the intermediate values? If a linear encoding is used (i.e. a gamma value of 1), the majority of values would be perceptually very close to white and a very small minority would be perceptually close to black. By using a gamma encoding (e.g., a gamma value of 2.2), the distribution is perceptually more linear (i.e. equidistant intervals between black and white).
 
-<div align="center"><img src="https://user-images.githubusercontent.com/2464019/38454812-917ffe76-3a6e-11e8-9776-262e1e229f4c.png"></div>
+<div align="center"><img src="/assets/posts/linear-gamma-and-sRGB-color-spaces/linear-gamma.png"></div>
 
 # sRGB color space
 

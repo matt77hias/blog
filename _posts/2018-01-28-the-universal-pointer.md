@@ -2,6 +2,7 @@
 layout: post
 title:  "The Universal Pointer"
 date:   2018-01-28
+description: ""
 ---
 
 # Problem

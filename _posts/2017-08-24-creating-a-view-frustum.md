@@ -3,6 +3,7 @@ layout: post
 math: true
 title:  "Creating a View Frustum in Local/World/Camera Space using SIMD"
 date:   2017-08-24
+description: ""
 ---
 
 # GPU - View Frustum Culling
