@@ -209,7 +209,9 @@
             var iframe = document.querySelector('iframe.giscus-frame');
             if (!iframe) return;
             observer.disconnect();
-            syncGiscusTheme(document.documentElement.dataset.theme || 'dark');
+            iframe.addEventListener('load', function () {
+                syncGiscusTheme(document.documentElement.dataset.theme || 'dark');
+            }, { once: true });
         });
         observer.observe(document.body, { childList: true, subtree: true });
     }
