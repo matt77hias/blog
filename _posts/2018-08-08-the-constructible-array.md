@@ -19,7 +19,7 @@ Note that the template class can use a C-style array or `std::array< T, N >` (po
 
 # Separating container from the arithmetic/logic
 
-A second generalization consists of separating the container functionality from the arithemtic/logical functionality (similar to the [MAML](https://github.com/matt77hias/MAML) project). On the one hand, we can think of our vectors rather as packs of data values without imposing any fixed interpretation. This way, the same packing template class and its interface (e.g., constructors, indexing mechanisms, etc.) can be used to store and access color data (e.g., linear RGB, sRGB, XYZ, LogLUV, etc.), geometrical data (e.g., point, normal, direction, plane, etc.) and abstract mathematical data (e.g., real, complex, dual, hyperbolic and quaternion numbers). On the other hand, arithmetic/logical functionality can be implemented using SIMD instructions for better performance: 
+A second generalization consists of separating the container functionality from the arithmetic/logical functionality (similar to the [MAML](https://github.com/matt77hias/MAML) project). On the one hand, we can think of our vectors rather as packs of data values without imposing any fixed interpretation. This way, the same packing template class and its interface (e.g., constructors, indexing mechanisms, etc.) can be used to store and access color data (e.g., linear RGB, sRGB, XYZ, LogLUV, etc.), geometrical data (e.g., point, normal, direction, plane, etc.) and abstract mathematical data (e.g., real, complex, dual, hyperbolic and quaternion numbers). On the other hand, arithmetic/logical functionality can be implemented using SIMD instructions for better performance: 
 
 1. Load the vector into an SIMD register (e.g., `__m128`);
 2. Perform all arithmetic and logical operations using SIMD intrinsics; 
@@ -29,7 +29,7 @@ In our vector classes, we do not want to use `__m128` member variables (e.g., `u
 
 # Extending std::array
 
-Since the arithmetic/logical functionality is not a part of our template class any more, our template class seems like a convenient extension of [`std::array`](https://en.cppreference.com/w/cpp/container/array). The latter provides lots of methods supporting nice interoperability with the `std` (e.g., `(c)begin`/`(c)end`, `size`, `empty`. Furthermore `std::array` can be used in range-based for loops and structure bindings.
+Since the arithmetic/logical functionality is not a part of our template class any more, our template class seems like a convenient extension of [`std::array`](https://en.cppreference.com/w/cpp/container/array). The latter provides lots of methods supporting nice interoperability with the `std` (e.g., `(c)begin`/`(c)end`, `size`, `empty`). Furthermore `std::array` can be used in range-based for loops and structure bindings.
 
 Unfortunately, `std::array` has no constructors itself, but rather uses [aggregate initialization](https://en.cppreference.com/w/cpp/language/aggregate_initialization). Therefore, constructing vectors from vectors with a different dimension and/or template parameter does not work straight out of the box. To achieve this, we will define a new class `Array` deriving from `std::array`, providing all the necessary constructors. Furthermore, we will provide some additional utility methods to construct and return `std::array`s (using C++17's guaranteed copy elision) which will be passed to the base class `std::array` inside these `Array` constructors.
 
@@ -96,12 +96,12 @@ namespace details
 		{
 			return static_cast< ToT >(v); 
 		};
-		return TransformArray(f, a);
+		return TransformArray(f, a, std::make_index_sequence< N >());
 	}
 }
 ```
 
-Convert `std::array< T , N >` to `std::tupple< T, ..., T >` and vice versa:
+Convert `std::array< T , N >` to `std::tuple< T, ..., T >` and vice versa:
 
 ```c++
 namespace details

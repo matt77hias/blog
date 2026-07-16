@@ -47,7 +47,7 @@ There is an alternative. We can encapsulate all the data we need inside a [`std:
 # ProxyPtr
 I call our universal pointer, `ProxyPtr`, after the [Proxy design pattern](https://en.wikipedia.org/wiki/Proxy_pattern). *(If someone will ever be tempted to add it to the `std`, you may name it std::proxy_ptr inside `<memory>` ;-) )*.
 
-Lets start with the member variables:
+Let's start with the member variables:
 ```c++
 template< typename T >
 class ProxyPtr final
@@ -62,7 +62,7 @@ public:
 
 Normally, I would like to avoid public member variables, but as we will see encapsulating `m_getter` is not possible for our `ProxyPtr`. The problem is that some lambda functions which are not visible in the scope of `ProxyPtr` require access to the member variable `m_getter` for casting purposes.
 
-Lets continue with the constructors, destructors and assignment operators. We have an empty constructor that defines `m_getter` to return `nullptr` when invoked:
+Let's continue with the constructors, destructors and assignment operators. We have an empty constructor that defines `m_getter` to return `nullptr` when invoked:
 
 ```c++
 ProxyPtr() noexcept 

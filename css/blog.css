@@ -60,7 +60,7 @@ main > article:last-child  { margin-bottom: 0; }
     font-size: 0.9em;
     font-style: italic;
     text-align: center;
-    margin: 0 0 0;
+    margin: 0;
 }
 
 /* ── Post prose ──────────────────────────────────────────── */
@@ -70,6 +70,8 @@ main > article:last-child  { margin-bottom: 0; }
 }
 
 .post-content p {
+    hyphens: auto;
+    -webkit-hyphens: auto;
     line-height: 1.7;
     margin: 0 0 0.75em;
     text-align: justify;

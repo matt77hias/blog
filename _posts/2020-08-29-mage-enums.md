@@ -3,6 +3,7 @@ layout: post
 published: false
 title:  "🧙 MAGE: Enums"
 date:   2020-08-29
+description: ""
 ---
 
 One annoying shortcoming of both scoped (i.e. `enum class`) and unscoped enums is the inability to perform bitwise operations while ensuring the same result type.

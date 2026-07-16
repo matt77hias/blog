@@ -1,5 +1,4 @@
 /* Solarized Dark (default) */
-.post-content .highlight,
 .highlight { background-color: #002b36; color: #93a1a1 }
 .highlight .err { color: #93a1a1 } /* Error */
 .highlight .o  { color: #93a1a1 } /* Operator */
@@ -76,7 +75,6 @@
 .highlight .gu { color: #cb4b16 } /* Generic.Subheading */
 
 /* Solarized Light — applied in light mode */
-[data-theme="light"] .post-content .highlight,
 [data-theme="light"] .highlight { background-color: #fdf6e3; color: #657b83 }
 [data-theme="light"] .highlight .err { color: #657b83 }
 [data-theme="light"] .highlight .o   { color: #657b83 }

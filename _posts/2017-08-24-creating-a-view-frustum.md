@@ -55,7 +55,7 @@ Alternatively, a homogeneous point $$p = \left(p_x,p_y,p_z,1\right)$$ satisfies 
 
 If we use six inward facing planes for our view frustum, all points $$p$$ satisfying $$\left(\hat{n}, d\right) \cdot p \lt 0$$ for at least one plane of the view frustum will be culled.
 
-But how do you obtain the six planes? Lets look at the transformation from local\|world\|camera space (denoted with a superscript $$s$$) to projection space:
+But how do you obtain the six planes? Let's look at the transformation from local\|world\|camera space (denoted with a superscript $$s$$) to projection space:
 
 $$\begin{align}
 p^{\mathrm{proj}}

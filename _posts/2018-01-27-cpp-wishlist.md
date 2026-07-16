@@ -7,10 +7,10 @@ description: ""
 
 This post contains a running list of C++ language features and standard library (i.e. `std`) extensions, I would like to see in future C++ standards (C++20 or beyond).
 
-# Full and partial template specilization for alias templates
+# Full and partial template specialization for alias templates
 
 [Alias templates](http://en.cppreference.com/w/cpp/language/type_alias) are introduced in C++11. 
-They basically extent [typedefs](http://en.cppreference.com/w/cpp/language/typedef) 
+They basically extend [typedefs](http://en.cppreference.com/w/cpp/language/typedef) 
 (which are equivalent to [type aliases](http://en.cppreference.com/w/cpp/language/type_alias)) by adding a template parameter list.
 
 ```c++
@@ -27,7 +27,7 @@ using Vector = std::vector< T >;
 Suppose we want to specialize the return type of a template function based on the template parameter. 
 Then we somehow need to map template parameters to return types. To allow arbitrary mappings, template specialization is required.
 
-Lets assume that we want to convert 32-bit numeric values (unsigned/signed integer values, floating point values) to the corresponding 64-bit numeric values. 
+Let's assume that we want to convert 32-bit numeric values (unsigned/signed integer values, floating point values) to the corresponding 64-bit numeric values. 
 In order to specify this mapping in C++, we can use a class template that will be specialized for each element of the mapping:
 
 ```c++
@@ -114,7 +114,7 @@ auto convert(T value) -> return_t< T >
 Unfortunately, (full) specialization of alias templates is not permitted in C++ (<= C++17). 
 This also implies that partial specialization of alias templates is not permitted either.
 
-# Partial template specilization for functions and member methods
+# Partial template specialization for functions and member methods
 
 Assume that we want to create resources in a uniform way by calling a function `Create` 
 with a template parameter matching the resource we want to create and 
@@ -150,7 +150,7 @@ auto Create(ConstructorArgsT&&... args)
     -> typename std::enable_if< std::is_same< Foo, ResourceT >::value, ResourceT& >::type 
 {
     g_foos.emplace_back(std::forward< ConstructorArgsT >(args)...);
-    return *g_foos.end();
+    return g_foos.back();
 }
 
 template< typename ResourceT, typename... ConstructorArgsT >
@@ -158,7 +158,7 @@ auto Create(ConstructorArgsT&&... args)
     -> typename std::enable_if< std::is_same< Bar, ResourceT >::value, ResourceT& >::type 
 {
     g_bars.emplace_back(std::forward< ConstructorArgsT >(args)...);
-    return *g_bars.end();
+    return g_bars.back();
 }
 
 auto main() -> int
@@ -197,7 +197,7 @@ auto Create(ConstructorArgsT&&... args)
     -> std::enable_if_t< std::is_same< Foo, ResourceT >::value, ResourceT& >
 {
     g_foos.emplace_back(std::forward< ConstructorArgsT >(args)...);
-    return *g_foos.end();
+    return g_foos.back();
 }
 
 template< typename ResourceT, typename... ConstructorArgsT >
@@ -205,7 +205,7 @@ auto Create(ConstructorArgsT&&... args)
     -> std::enable_if_t< std::is_same< Bar, ResourceT >::value, ResourceT& > 
 {
     g_bars.emplace_back(std::forward< ConstructorArgsT >(args)...);
-    return *g_bars.end();
+    return g_bars.back();
 }
 
 auto main() -> int
@@ -262,7 +262,7 @@ auto main() -> int
 ```
 **Note** that various [type traits](https://en.cppreference.com/w/cpp/header/type_traits) exist in C++. 
 For example: if you rather want collections of pointers instead of values to exploit polymorphism, 
-you can use [`std::base_of`](http://en.cppreference.com/w/cpp/types/is_base_of) instead of `std::is_same`.
+you can use [`std::is_base_of`](http://en.cppreference.com/w/cpp/types/is_base_of) instead of `std::is_same`.
 
 None of these three versions look very readable or pleasing at all.
 If we stick to SFINAE, we will probably have to wait until C++20 which will introduce the `requires` keyword.
@@ -362,7 +362,7 @@ partial specialization of member methods is not permitted in C++ (<= C++17).
 C11 added anonymous unions (originally only a GNU extension) and anonymous structs to the C standard.
 C++98 (the first C++ standard) includes anonymous unions but not anonymous structs.
 
-Though, anonymous structs work out-of-the-box with MVC++, gcc and Clang for all C++ standards and are ubiquitous in APIs aiming at both a C and C++ audience, such as the Windows API (try to disable C++ language extensions in the compiler and see for yourself). 
+Though, anonymous structs work out-of-the-box with MSVC, gcc and Clang for all C++ standards and are ubiquitous in APIs aiming at both a C and C++ audience, such as the Windows API (try to disable C++ language extensions in the compiler and see for yourself). 
 So the only reason I can imagine for not adding anonymous structs to the C++ standard, is that one simply forgot that this language feature is non-standard.
 
 # Integer suffixes
@@ -399,7 +399,7 @@ auto main() -> int
 {
     // Assume that this value is not known at compile time...
     auto value  = static_cast< signed short >(9);
-    auto result = std::max(i, static_cast< signed short >(5));
+    auto result = std::max(value, static_cast< signed short >(5));
 	
     return 0;
 }
@@ -438,11 +438,11 @@ auto main() -> int
 ```
 
 # Remove and replace [[nodiscard]] with [[maybe_discard]].
-I add C++17's `[[nodiscard]]` attribute everywhere it makes sense. For functions returning error codes, the returned value should be used, since I return these codes for a reason and do not intent or allow the continuation of the program without handling them appropriately (where the user may use his preferred programming style: total, normal, defensive, etc.). For functions returning values that could leak resources (allocators) or could break the goal (async) in case of not using them, the returned values should be used.  
+I add C++17's `[[nodiscard]]` attribute everywhere it makes sense. For functions returning error codes, the returned value should be used, since I return these codes for a reason and do not intend or allow the continuation of the program without handling them appropriately (where the user may use his preferred programming style: total, normal, defensive, etc.). For functions returning values that could leak resources (allocators) or could break the goal (async) in case of not using them, the returned values should be used.  
 
 Most of the remaining functions or member methods (i.e. getters) that return a value are pure or nearly pure (if no exceptions are thrown or assertions are failed). This last category comprises more than 90% of my codebase. Calling these functions without using the returned value makes no sense and should be dealt with to obtain proper code. So in that sense, I like to be warned or even receive an error in such cases. On the other hand, interfaces become quite verbose since you will nearly see the attribute once in every two functions. 
 
-Ideally C++17 should have broken backwards compatibility by adding the opposite keyword `[[maybe_discarded]]`. Note that this is not strictly breaking backwards compatibility, but merely adds extra warnings to existing codebases. Compilers will always become better at analyzing code, so you should expect more future warnings anyway.
+Ideally C++17 should have broken backwards compatibility by adding the opposite keyword `[[maybe_discard]]`. Note that this is not strictly breaking backwards compatibility, but merely adds extra warnings to existing codebases. Compilers will always become better at analyzing code, so you should expect more future warnings anyway.
 
 # CPU clock
 I really like the [`chrono`](http://en.cppreference.com/w/cpp/chrono) library and more specifically, I like the way it handles different storage types (e.g., integer or floating point) with varying degrees of timestamp precision. The available clocks can only handle wall clock time. I would like to handle kernel and/or user mode time as well, since these are more accurate. *(If you have a Windows operating system, I encourage you to compare the difference for yourself with this [project](https://github.com/matt77hias/Timing/blob/master/Timing/Timing/src/Timing.cpp). More particularly, compare the results obtained after running the program once versus twice at the same time.)*

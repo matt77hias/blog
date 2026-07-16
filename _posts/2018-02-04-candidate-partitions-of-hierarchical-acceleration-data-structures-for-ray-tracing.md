@@ -8,10 +8,10 @@ description: ""
 
 # Partitioning Schemes
 
-Given some geometric primitives in a scene, it is possible to partition and organize these primitives in multiple ways in a hierarchical or non-hierarchical data structure to exploit spatial coherence during ray tracing. We can partition the geometric primitives into two or more disjoint groups without taking the scene (explicitly) into consideration during the partitioning itself. Or we can do the complete opposite by partitioning the scene's space into two or more disjoint groups without taking the geometric primitives (explicitly) into consideration during the partitioning itself. Or we can use a combination of these two extremes. More formerly:
+Given some geometric primitives in a scene, it is possible to partition and organize these primitives in multiple ways in a hierarchical or non-hierarchical data structure to exploit spatial coherence during ray tracing. We can partition the geometric primitives into two or more disjoint groups without taking the scene (explicitly) into consideration during the partitioning itself. Or we can do the complete opposite by partitioning the scene's space into two or more disjoint groups without taking the geometric primitives (explicitly) into consideration during the partitioning itself. Or we can use a combination of these two extremes. More formally:
 * *Spatial partitioning schemes* (recursively) subdivide a given space into spatially disjoint groups. This makes an efficient ray traversal possible at the expense of referencing geometric primitives multiple times.
 * *Object partitioning schemes* (recursively) subdivide a given set of geometric primitives into disjoint groups which tightly comprise their geometric primitives. Geometric primitives are referenced just once at the expense of a less efficient ray traversal in case of spatially overlapping groups.
-* *Hybrid partitioning scheme*s combine both spatial and object partitioning schemes.
+* *Hybrid partitioning schemes* combine both spatial and object partitioning schemes.
 
 For *closest-hit ray queries* (e.g., camera rays, indirect rays, etc.), we want to find the closest hit point of rays with the scene. Therefore, the most efficient traversal of a ray through the acceleration data structure is a front-to-back ray traversal. Such a traversal is trivially to achieve for spatial partitioning schemes, but not for object partitioning schemes due to the possible spatial overlapping between the different groups of geometric primitives. 
 
@@ -36,7 +36,7 @@ As we will see, the structure of these candidate partitions differ between diffe
 
 In case of a binary tree with axis-aligned voxels, the BSP is called a *kd-tree* or *rectilinear BSP*.
 
-<div align="center"><img src="/blog/assets/posts/candidate-partitions-acceleration-data-structures/bsp.jpg"></div>
+<figure><img src="/blog/assets/posts/candidate-partitions-acceleration-data-structures/bsp.jpg" alt="Diagram of a BSP candidate partition showing parent, left and right child voxels separated by a splitting plane"></figure>
 
 ##### Geometric primitives of the child voxels
 * Geometric primitives whose AABB is to the left of the <span style="color:purple;">splitting plane</span> belong to the <span style="color:green;">left</span> child voxel. 
@@ -80,7 +80,7 @@ KAPLAN M. R.: The Use of Spatial Coherence in Ray Tracing. *ACM SIGGRAPH Course 
 * (non-)axis-aligned voxels
 * 6 planes of the voxels are tight
 
-<div align="center"><img src="/blog/assets/posts/candidate-partitions-acceleration-data-structures/bvh.jpg"></div>
+<figure><img src="/blog/assets/posts/candidate-partitions-acceleration-data-structures/bvh.jpg" alt="Diagram of a BVH candidate partition with tight AABBs around the geometric primitives in each child voxel"></figure>
 
 ##### Geometric primitives of the child voxels
 * Geometric primitives whose centroid is to the left of the <span style="color:purple;">splitting plane</span> belong to the <span style="color:green;">left</span> child voxel. 
@@ -111,7 +111,7 @@ RUBIN S. M., WHITTED T.: A 3-dimensional Representation for Fast Rendering of Co
 
 BIHs are also known as *Spatial Kd trees* (SKds) and *Bounded Kd trees* (B-Kds).
 
-<div align="center"><img src="/blog/assets/posts/candidate-partitions-acceleration-data-structures/bih.jpg"></div>
+<figure><img src="/blog/assets/posts/candidate-partitions-acceleration-data-structures/bih.jpg" alt="Diagram of a BIH candidate partition where one plane of each child voxel is tight to the primitives"></figure>
 
 ##### Geometric primitives of the child voxels
 * Geometric primitives whose centroid is to the left of the <span style="color:purple;">splitting plane</span> belong to the <span style="color:green;">left</span> child voxel. 
@@ -146,7 +146,7 @@ Note that the papers introducing SKds, B-Kds and BIHs in computer graphics are a
 * (non-)axis-aligned voxels
 * 6 planes of the voxels are tight, but constrained by the <span style="color:purple;">splitting plane</span>
 
-<div align="center"><img src="/blog/assets/posts/candidate-partitions-acceleration-data-structures/gkbvh.jpg"></div>
+<figure><img src="/blog/assets/posts/candidate-partitions-acceleration-data-structures/gkbvh.jpg" alt="Diagram of a GK-BVH candidate partition with tight voxels constrained by the splitting plane"></figure>
 
 ##### Geometric primitives of the child voxels
 * Geometric primitives to the left of the <span style="color:purple;">splitting plane</span> belong to the <span style="color:green;">left</span> child voxel. 
@@ -172,10 +172,10 @@ We can also clip the AABBs instead of the geometric primitives, which is similar
 ##### AABBs of the child voxels
 The AABBs of the child voxels are made tight to the AABBs of the geometric primitives, but the plane corresponding to the <span style="color:purple;">splitting plane</span> can only be moved to the <span style="color:green;">left</span> (<span style="color:red;">right</span>) for the <span style="color:green;">left</span> (<span style="color:red;">right</span>) child voxel. Furthermore, only the overlap with the AABB of the <span style="color:blue;">parent</span> voxel will be used when geometric primitives straddle the AABB of the <span style="color:blue;">parent</span> voxel.
 
-* (+) $$\mathcal{O}\left(N \log N\right)$$ full sweeping-plane SAH build algorithm is possible for constructing complete GK-BVHs due to the involved clipping operations.
+* (+) $$\mathcal{O}\left(N \log N\right)$$ full sweeping-plane SAH build algorithm is possible for constructing complete GK-BVHs, since clipping operates on AABBs rather than primitives.
 * (+) $$\mathcal{O}\left(N \log N\right)$$ binned SAH build algorithm for constructing complete GK-BVHs (in parallel) is possible.
 
-GK-BVHs are, however, tighter since they perform clipping operations on the geometric primitives (and thus not on their less tighter AABBs). Therefore, GK-BVHs will typically have a smaller geometric reference duplication. The only benefit of not clipping the geometric primitives, but the AABBs instead, is a faster build algorithm and the potential of still being able to use a full sweeping-plane SAH build algorithm in a similar fashion to the way BVHs can be built. The traversal will however be the same as for the GK-BVH, and will thus be the same as for the BVH as well. And the traversal of the latter is more efficient in case of less overlap between the AABBs of the child voxels. Since the tightness of GK-BVHs is larger than your acceleration data structure, GK-BVHs will outperform them.
+GK-BVHs are, however, tighter since they perform clipping operations on the geometric primitives (and thus not on their less tight AABBs). Therefore, GK-BVHs will typically have a smaller geometric reference duplication. The only benefit of not clipping the geometric primitives, but the AABBs instead, is a faster build algorithm and the potential of still being able to use a full sweeping-plane SAH build algorithm in a similar fashion to the way BVHs can be built. The traversal will however be the same as for the GK-BVH, and will thus be the same as for the BVH as well. And the traversal of the latter is more efficient in case of less overlap between the AABBs of the child voxels. Since the tightness of GK-BVHs is larger than that of the AABB-clipping variant, GK-BVHs will outperform them.
 
 ##### References
 
@@ -191,7 +191,7 @@ POPOV S., GEORGIEV I., DIMOV R., SLUSALLEK P.: Object Partitioning Considered Ha
 * (non-)axis-aligned voxels
 * combination of BVH and GK-BVH candidate partitions
 
-<div align="center"><img src="/blog/assets/posts/candidate-partitions-acceleration-data-structures/sbvh.jpg"></div>
+<figure><img src="/blog/assets/posts/candidate-partitions-acceleration-data-structures/sbvh.jpg" alt="Diagram of an SBVH candidate partition combining BVH and GK-BVH splits"></figure>
 
 SBVHs are built with a combination of BVH and GK-BVH candidate partitions.
 
@@ -202,7 +202,7 @@ Since, GK-BVHs will be traversed similarly to BVHs, nothing is stopping us from 
 
 Besides being a hybrid of BVH and GK-BVH candidate partitions, the SBVH is more flexible than a GK-BVH. The best candidate partition can be refined if geometric primitives are contained in both child voxels. Each such primitive can be added to the <span style="color:green;">left</span>, <span style="color:red;">right</span> or both child voxels. After iterating these geometric primitives, we obtain the final best candidate partition for a single split decision.
 
-If we do not use optimizations such as LBVHs which uses spatial Morton coding to organize the BVH. The SBVH is conceptually the most effective acceleration data structure presented here so far, offering the best of both worlds (i.e. hybrid of spatial and object partitioning schemes). SBVHs were the preferred acceleration data structure of the [NVidia OptiX Ray Tracing Engine](https://developer.nvidia.com/optix).
+The SBVH is conceptually the most effective acceleration data structure presented here so far, offering the best of both worlds (i.e. hybrid of spatial and object partitioning schemes). SBVHs were the preferred acceleration data structure of the [NVIDIA OptiX Ray Tracing Engine](https://developer.nvidia.com/optix).
 
 ##### References
 

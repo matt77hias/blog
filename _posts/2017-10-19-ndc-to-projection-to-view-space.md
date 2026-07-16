@@ -84,7 +84,7 @@ inline const XMVECTOR XM_CALLCONV
 ```
 
 # Orthographic Camera Only Approach
-An (row-major) orthographic transformation matrix has the following format:
+A (row-major) orthographic transformation matrix has the following format:
 
 $$\begin{align} \mathrm{T}^{\mathrm{cam \rightarrow proj}}
 &= \begin{bmatrix} 

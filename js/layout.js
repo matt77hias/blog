@@ -5,10 +5,10 @@
  * All paths are absolute from the site root so they work at /blog/YYYY/MM/DD/slug/.
  */
 
-(function () {
+(function ()
+{
 
     var ROOT = (document.querySelector('meta[name="main-site"]') || {}).content || 'https://matt77hias.github.io';
-    var BASE = ROOT + '/blog';
 
     var NAV_ITEMS = [
         { id: 'home',         href: ROOT + '/index.html',       label: 'Home',         icon: 'icon-nav-home',         sw: '2' },
@@ -22,39 +22,37 @@
 
     // ── Icon sprite ────────────────────────────────────────────────────────────
 
-    function loadIconSprite() {
-        var localUrl  = BASE + '/assets/icons.svg';
+    function loadIconSprite()
+    {
         var remoteUrl = ROOT + '/assets/icons.svg';
-        function inject(svgText) {
+        function inject(svgText)
+        {
             var tmp = document.createElement('div');
             tmp.innerHTML = svgText;
             var el = tmp.firstElementChild;
-            if (el && el.tagName.toLowerCase() === 'svg') {
+            if (el && el.tagName.toLowerCase() === 'svg')
+            {
                 el.setAttribute('aria-hidden', 'true');
                 document.body.insertBefore(el, document.body.firstChild);
             }
         }
-        function fetchRemote() {
-            fetch(remoteUrl)
-                .then(function (r) { return r.ok ? r.text() : null; })
-                .then(function (text) { if (text) inject(text); })
-                .catch(function () {});
-        }
-        fetch(localUrl)
+        fetch(remoteUrl)
             .then(function (r) { return r.ok ? r.text() : null; })
-            .then(function (text) { if (text) inject(text); else fetchRemote(); })
-            .catch(fetchRemote);
+            .then(function (text) { if (text) inject(text); })
+            .catch(function () {});
     }
 
     // ── Glitch toggle ──────────────────────────────────────────────────────────
 
     var GLITCH_KEY = 'glitchDisabled';
 
-    function isGlitchDisabled() {
+    function isGlitchDisabled()
+    {
         try { return localStorage.getItem(GLITCH_KEY) === '1'; } catch (e) { return false; }
     }
 
-    function applyGlitchState(btn, disabled) {
+    function applyGlitchState(btn, disabled)
+    {
         document.body.classList.toggle('glitch-disabled', disabled);
         if (!btn) return;
         var label = disabled ? 'Enable glitch effect' : 'Disable glitch effect';
@@ -65,13 +63,16 @@
         btn.classList.toggle('active', disabled);
     }
 
-    function initGlitchToggle() {
+    function initGlitchToggle()
+    {
         var btn = document.getElementById('glitch-toggle');
         if (!btn) return;
         applyGlitchState(btn, isGlitchDisabled());
-        btn.addEventListener('click', function () {
+        btn.addEventListener('click', function ()
+        {
             var disabled = !isGlitchDisabled();
-            try {
+            try
+            {
                 if (disabled) localStorage.setItem(GLITCH_KEY, '1');
                 else          localStorage.removeItem(GLITCH_KEY);
             } catch (e) {}
@@ -81,7 +82,8 @@
 
     // ── Header ─────────────────────────────────────────────────────────────────
 
-    function buildHeader() {
+    function buildHeader()
+    {
         var header = document.createElement('header');
 
         var h1 = document.createElement('h1');
@@ -99,7 +101,6 @@
         glitchBtn.setAttribute('title',        glitchLabel);
         glitchBtn.setAttribute('data-tooltip', glitchLabel);
         glitchBtn.setAttribute('aria-pressed', String(glitchDisabled));
-        document.body.classList.toggle('glitch-disabled', glitchDisabled);
         glitchBtn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-glitch-wave"/></svg>';
         btns.appendChild(glitchBtn);
 
@@ -120,7 +121,8 @@
 
     // ── Nav ────────────────────────────────────────────────────────────────────
 
-    function buildNav() {
+    function buildNav()
+    {
         var nav = document.createElement('nav');
         nav.id = 'navigationbar';
         nav.setAttribute('aria-label', 'Site navigation');
@@ -137,12 +139,14 @@
         list.className = 'nav-links';
         list.id = 'nav-links-list';
 
-        for (var i = 0; i < NAV_ITEMS.length; i++) {
+        for (var i = 0; i < NAV_ITEMS.length; i++)
+        {
             var item = NAV_ITEMS[i];
             var a = document.createElement('a');
             a.className = item.id;
             a.href = item.href;
-            if (item.external) {
+            if (item.external)
+            {
                 a.target = '_blank';
                 a.rel = 'noopener noreferrer';
                 a.setAttribute('aria-label', item.ariaLabel);
@@ -159,7 +163,8 @@
 
     // ── Profile ─────────────────────────────────────────────────────────────────
 
-    function buildProfile() {
+    function buildProfile()
+    {
         var div = document.createElement('div');
         div.className = 'profile';
         return div;
@@ -167,12 +172,14 @@
 
     // ── Footer ──────────────────────────────────────────────────────────────────
 
-    function initFooter() {
+    function initFooter()
+    {
         var avatar = document.querySelector('footer .footer-avatar');
         var copy   = document.querySelector('footer .copyright');
         var year   = new Date().getFullYear();
 
-        if (avatar) {
+        if (avatar)
+        {
             avatar.loading = 'lazy';
             avatar.src = ROOT + '/assets/Avatar.png';
             avatar.alt = 'Matthias Moulin';
@@ -180,22 +187,26 @@
 
         fetch(ROOT + '/data/site.json')
             .then(function (r) { return r.ok ? r.json() : null; })
-            .then(function (site) {
-                if (!site) {
+            .then(function (site)
+            {
+                if (!site)
+                {
                     if (copy) copy.textContent = 'Copyright © 2015–' + year + ' Matthias Moulin. All Rights Reserved.';
                     return;
                 }
                 if (avatar) avatar.alt = site.avatarAlt;
                 if (copy) copy.textContent = 'Copyright © ' + site.copyrightStart + '–' + year + ' ' + site.author + '. All Rights Reserved.';
             })
-            .catch(function () {
+            .catch(function ()
+            {
                 if (copy) copy.textContent = 'Copyright © 2015–' + year + ' Matthias Moulin. All Rights Reserved.';
             });
     }
 
     // ── Theme ────────────────────────────────────────────────────────────────────
 
-    function syncGiscusTheme(theme) {
+    function syncGiscusTheme(theme)
+    {
         var iframe = document.querySelector('iframe.giscus-frame');
         if (!iframe) return;
         iframe.contentWindow.postMessage(
@@ -204,25 +215,39 @@
         );
     }
 
-    function watchGiscusTheme() {
-        var observer = new MutationObserver(function () {
+    function watchGiscusTheme()
+    {
+        var observer = new MutationObserver(function ()
+        {
             var iframe = document.querySelector('iframe.giscus-frame');
             if (!iframe) return;
             observer.disconnect();
-            iframe.addEventListener('load', function () {
+            if (iframe.contentDocument && iframe.contentDocument.readyState === 'complete')
+            {
                 syncGiscusTheme(document.documentElement.dataset.theme || 'dark');
-            }, { once: true });
+            }
+            else
+            {
+                iframe.addEventListener('load', function ()
+                {
+                    syncGiscusTheme(document.documentElement.dataset.theme || 'dark');
+                }, { once: true });
+            }
         });
-        observer.observe(document.body, { childList: true, subtree: true });
+        var wrap = document.querySelector('.giscus-wrap');
+        if (wrap) observer.observe(wrap, { childList: true });
     }
 
-    function initTheme() {
+    function initTheme()
+    {
         var root = document.documentElement;
         var btn  = document.getElementById('theme-toggle');
 
-        function applyTheme(theme) {
+        function applyTheme(theme)
+        {
             root.dataset.theme = theme;
-            if (btn) {
+            if (btn)
+            {
                 var label = theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode';
                 btn.setAttribute('aria-label', label);
                 btn.setAttribute('title', label);
@@ -230,17 +255,20 @@
                 btn.setAttribute('aria-pressed', theme === 'light' ? 'true' : 'false');
             }
             var meta = document.querySelector('meta[name="theme-color"]');
-            if (meta) {
+            if (meta)
+            {
                 var accent = getComputedStyle(root).getPropertyValue('--color-accent').trim();
                 if (accent) meta.setAttribute('content', accent);
             }
-            syncGiscusTheme(theme);
+            if (document.querySelector('iframe.giscus-frame')) syncGiscusTheme(theme);
         }
 
         applyTheme(root.dataset.theme || 'dark');
 
-        if (btn) {
-            btn.addEventListener('click', function () {
+        if (btn)
+        {
+            btn.addEventListener('click', function ()
+            {
                 var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
                 applyTheme(next);
                 try { localStorage.setItem('theme', next); } catch (e) {}
@@ -250,7 +278,8 @@
 
     // ── Nav toggle ────────────────────────────────────────────────────────────────
 
-    function initNav() {
+    function initNav()
+    {
         var btn   = document.querySelector('.nav-toggle');
         var links = document.querySelector('#nav-links-list');
         var navEl = document.querySelector('#navigationbar');
@@ -269,13 +298,15 @@
     var MAGIC = '__obf__';
     var NO_NEW_TAB = ['mailto:', 'skype:', 'tel:', 'sms:'];
 
-    function initProfile() {
+    function initProfile()
+    {
         var container = document.querySelector('.profile');
         if (!container) return;
 
         fetch(ROOT + '/data/profile-links.json')
             .then(function (r) { return r.ok ? r.json() : null; })
-            .then(function (links) {
+            .then(function (links)
+            {
                 if (!links) return;
                 var nav = document.createElement('nav');
                 nav.setAttribute('aria-label', 'Social profiles');
@@ -284,10 +315,13 @@
                 nav.appendChild(ul);
 
                 var currentGroup = null;
-                for (var i = 0; i < links.length; i++) {
+                for (var i = 0; i < links.length; i++)
+                {
                     var link = links[i];
-                    if (link.group && link.group !== currentGroup) {
-                        if (currentGroup !== null) {
+                    if (link.group && link.group !== currentGroup)
+                    {
+                        if (currentGroup !== null)
+                        {
                             var divider = document.createElement('li');
                             divider.className = 'social-divider';
                             divider.setAttribute('aria-hidden', 'true');

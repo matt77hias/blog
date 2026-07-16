@@ -13,35 +13,35 @@
         <meta name="fediverse:creator"   content="@matt77hias@mastodon.gamedev.place">
         <meta name="twitter:card"       content="summary_large_image">
         <meta name="twitter:site"       content="@matt77hias">
-        <meta name="twitter:title"      content="{{page.title}}">
+        <meta name="twitter:title"      content="{{page.title | xml_escape}}">
         {% if page.description %}
-        <meta name="twitter:description" content="{{page.description}}">
+        <meta name="description"         content="{{page.description | xml_escape}}">
+        <meta name="twitter:description" content="{{page.description | xml_escape}}">
         {% endif %}
         {% if page.image %}
-        <meta name="twitter:image" content="{{site.main_site}}{{site.baseurl}}/{{page.image}}">
+        <meta name="twitter:image" content="{{site.main_site}}{{site.baseurl}}{{page.image}}">
         {% else %}
         <meta name="twitter:image" content="{{site.main_site}}/assets/Avatar.png">
         {% endif %}
         <meta property="og:type"        content="article"/>
+        <meta property="og:site_name"   content="Matthias Moulin&#39;s Blog"/>
         <meta property="article:author" content="Moulin, Matthias"/>
         <meta property="article:published_time" content="{{page.date | date_to_xmlschema}}"/>
-        <meta property="og:title"       content="{{page.title}}"/>
+        <meta property="og:title"       content="{{page.title | xml_escape}}"/>
         <meta property="og:url"         content="{{site.main_site}}{{site.baseurl}}{{page.url}}"/>
         {% if page.description %}
-        <meta property="og:description" content="{{page.description}}"/>
+        <meta property="og:description" content="{{page.description | xml_escape}}"/>
         {% endif %}
         {% if page.image %}
-        <meta property="og:image" content="{{site.main_site}}{{site.baseurl}}/{{page.image}}"/>
+        <meta property="og:image" content="{{site.main_site}}{{site.baseurl}}{{page.image}}"/>
         {% else %}
         <meta property="og:image" content="{{site.main_site}}/assets/Avatar.png"/>
         {% endif %}
         <link rel="canonical" href="{{site.main_site}}{{site.baseurl}}{{page.url}}">
-        <title>{{ page.title }} — Matthias Moulin</title>
+        <title>{{ page.title | xml_escape }} — Matthias Moulin</title>
         <link rel="preconnect"    href="https://www.googletagmanager.com">
         <link rel="dns-prefetch"  href="https://www.googletagmanager.com">
         <link rel="icon"          href="{{site.main_site}}/favicon.ico" type="image/x-icon">
-        <link rel="preload" as="font" type="font/woff2" href="{{site.main_site}}/assets/fonts/OpenSans-CondLight.woff2" crossorigin>
-        <link rel="preload" as="font" type="font/woff2" href="{{site.main_site}}/assets/fonts/OpenSans-Light.woff2" crossorigin>
         <link rel="stylesheet"    href="{{site.main_site}}/src/css/tokens.css">
         <link rel="stylesheet"    href="{{site.main_site}}/src/css/base.css">
         <link rel="stylesheet"    href="{{site.main_site}}/src/css/header.css">
@@ -54,8 +54,8 @@
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-SD3ZFZNHLD"></script>
         <script src="{{site.main_site}}/src/external/google-analytics.js"></script>
         {% if page.math %}
-        <script src="{{site.main_site}}/src/external/mathjax.js"></script>
-        <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+        <script defer src="{{site.main_site}}/src/external/mathjax.js"></script>
+        <script defer src="https://cdn.jsdelivr.net/npm/mathjax@4.1.3/tex-chtml.js"></script>
         {% endif %}
     </head>
 

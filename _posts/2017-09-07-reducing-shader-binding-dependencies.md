@@ -7,16 +7,16 @@ description: ""
 
 Constant buffer, shader resource view, sampler and unordered access view variables are bound to [registers](https://msdn.microsoft.com/en-us/library/windows/desktop/dd607359(v=vs.85).aspx) in HLSL of type `b`, `t`, `s` and `u`, respectively. The binding slots of these registers, which must be known at compile-time, are typically explicitly hardcoded in and spread among the various shaders.
 
-This approach, unfortunately, introduces lots of implicit dependencies which are difficult to maintain while the codebase grows. The binding slots of shaders, which belong together, can diverge after refactoring due to replication in the HLSL files. Direct3D bindings in the C++ files can diverge from their associated bindings in the HLSL files. Bindings that need to be persistent accross multiple pipeline passes, could start interfering with non-persistent bindings.
+This approach, unfortunately, introduces lots of implicit dependencies which are difficult to maintain while the codebase grows. The binding slots of shaders, which belong together, can diverge after refactoring due to replication in the HLSL files. Direct3D bindings in the C++ files can diverge from their associated bindings in the HLSL files. Bindings that need to be persistent across multiple pipeline passes, could start interfering with non-persistent bindings.
 
-To avoid these situations, we need to centralize the bindings between HLSL files and between HLSL and C++ files while still beining able to resolve the bindings at compile-time. A possible solution is to include a single header file containing all binding information in both our HLSL and C++ files:
+To avoid these situations, we need to centralize the bindings between HLSL files and between HLSL and C++ files while still being able to resolve the bindings at compile-time. A possible solution is to include a single header file containing all binding information in both our HLSL and C++ files:
 
 ```c++
 #ifndef HEADER_HLSL // "pragma once" is unfortunately not supported by the HLSL pre-processor
 #define HEADER_HLSL
 
 #define MAGE_NVIDIA_WARP_SIZE   32
-#define MAGE_AMD_WAFEFRONT_SIZE 64
+#define MAGE_AMD_WAVEFRONT_SIZE 64
 #define GROUP_SIZE_DEFAULT      16
 
 // ## := pre-processor concatenation operator.
